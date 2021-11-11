@@ -1,7 +1,6 @@
-import 'package:caregiver_app/data_objects/event_detail.dart';
-
 import '../data_objects/event.dart';
 import '../data_objects/event_detail.dart';
+import 'package:caregiver_app/data_objects/event_detail.dart';
 
 class EventAccessObject {
   static final EventAccessObject _singleton = EventAccessObject._internal();
@@ -12,36 +11,42 @@ class EventAccessObject {
 
   EventAccessObject._internal();
 
-  final List<Event> events = List.generate(
-      20,
-      (int i) => generateRandomEvent(
-        'C_000000000000',
-        'Event $i',
-        <EventDetail>[
-          EventDetail('D_000000000000', 'Detail 1', 'T_000000000000'),
-          EventDetail('D_000000000001', 'Detail 2', 'T_000000000000')
-        ],
-        null
-      ),
-      growable: true);
+  final List<Event> eventData = List.generate(
+    10,
+    (int i) => generateRandomEvent(
+      'C_000000000000',
+      'Event $i',
+      List.generate(
+        1,
+        (int i) => EventDetail('D_000000000000', 'Detail $i', 'T_000000000000'),
+      )
+    ),
+    growable: true
+  );
 
-  List<Event> getUserTasks(String userId) {
-    var userEvents = <Event>[];
-    for (var i = 0; i < events.length; i++) {
-      if (events[i].assignedUserId == userId) {
-        userEvents.add(events[i]);
+  List<Event> getEvents(
+    String? id,
+    String? name,
+    String? carePlanId,
+    bool? isDue,
+    bool? isCompleted,
+    bool? willNotify,
+    String? assignedUserId,
+  ) {
+    var events = <Event>[];
+    for (var i = 0; i < eventData.length; i++) {
+      if (
+        (id == null || eventData[i].id == id)
+        && (name == null || eventData[i].name == name)
+        && (carePlanId == null || eventData[i].carePlanId == carePlanId)
+        && (isDue == null || isDue == (eventData[i].dueAt != null))
+        && (isCompleted == null || isCompleted == (eventData[i].completedAt != null))
+        && (willNotify == null || willNotify == (eventData[i].notifyAt != null))
+        && (assignedUserId == null || eventData[i].assignedUserId == assignedUserId)
+      ) {
+        events.add(eventData[i]);
       }
     }
-    return userEvents;
-  }
-
-  List<Event> getUncompletedEvents() {
-    var uncompletedEvents = <Event>[];
-    for (var i = 0; i < events.length; i++) {
-      if (events[i].completedAt == null) {
-        uncompletedEvents.add(events[i]);
-      }
-    }
-    return uncompletedEvents;
+    return events;
   }
 }

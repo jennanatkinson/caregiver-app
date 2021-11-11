@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 import 'event_detail.dart';
 
@@ -26,13 +25,20 @@ class Event {
     this.notifyAt,
     this.assignedUserId
   );
+
+  // toggleComplete() {
+  //   if (completedAt == null) {
+  //     completedAt = DateTime.now().millisecondsSinceEpoch;
+  //   } else {
+  //     completedAt = null;
+  //   }
+  // }
 }
 
 Event generateRandomEvent(
     String carePlanId,
     String name,
-    List<EventDetail> eventDetails,
-    String? assignedUserId
+    List<EventDetail> eventDetails
   ) {
   var random = Random();
 
@@ -40,15 +46,22 @@ Event generateRandomEvent(
   var id = 100000000000 +
       ((random.nextInt(4294967296) << 32) | random.nextInt(4294967296))
       % 899999999999;
-  // Generates a date between Jan 1, 2020 and Jan 1, 2023
-  var createdAt = (1577836800 + random.nextInt(94654799)) * 1000;
-  // Generates dates between the created date and a week later
-  var dueAt = random.nextBool()
-    ? createdAt + random.nextInt(604800) * 1000 : null;
-  var completedAt = random.nextBool()
-    ? createdAt + random.nextInt(604800) * 1000 : null;
-  var notifyAt = random.nextBool()
-    ? createdAt + random.nextInt(604800) * 1000 : null;
+
+  int now = DateTime.now().millisecondsSinceEpoch;
+  const int weekInMilliseconds = 604800000;
+  // Generates a date between a week ago and now
+  var createdAt = now - random.nextInt(weekInMilliseconds);
+  // Generates null or dates between the created date and a week later
+  var dueAt =
+    random.nextBool() ? createdAt + random.nextInt(weekInMilliseconds) : null;
+  var notifyAt =
+    random.nextBool() ? createdAt + random.nextInt(weekInMilliseconds) : null;
+  // Generates null or a date between the created date and now
+  var completedAt =
+    random.nextBool() ? (createdAt - random.nextInt(weekInMilliseconds)) : null;
+
+  var assignedUserId = random.nextBool() ? 'U_000000000000' : null;
+
   return Event(
     'E_$id',
     name,

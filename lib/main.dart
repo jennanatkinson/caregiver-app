@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'theme.dart';
-import 'tasks_widget.dart';
+import 'home_widget.dart';
+//import 'theme.dart';
+//import 'tasks_widget.dart';
 
 void main() => runApp(const CaregiverApp());
 
@@ -10,15 +10,15 @@ class CaregiverApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Caregiver',
-      home: Scaffold(
+      home: Home(),/*Scaffold(
         body: TasksWidget(
           carePlanName: 'Evelyn\'s Care',
           patientInitials: 'E'
         ),
       ),
-      //theme: mainThemeData,
+      //theme: mainThemeData,*/
     );
   }
 }

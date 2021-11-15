@@ -1,0 +1,9 @@
+const myTasksString = 'My Tasks';
+const allTasksString = 'All Tasks';
+const incompleteString = 'Incomplete';
+const completeString = 'Complete';
+const taskString = 'Tasks';
+const historyString = 'History';
+const addString = 'Add';
+const manageCareString = 'Manage Care';
+const settingsString = 'Settings';

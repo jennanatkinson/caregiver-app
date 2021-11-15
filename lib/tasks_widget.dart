@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
+import 'strings.dart';
 
-import 'theme.dart';
+//import 'theme.dart';
 import 'main_app_bar.dart';
 import 'data_objects/event.dart';
 import 'dao/event_access_object.dart';
@@ -19,8 +20,8 @@ class TasksWidget extends StatefulWidget {
   }) : super(key: key);
   final String carePlanName;
   final String patientInitials;
-  final String firstTab = 'My Tasks';
-  final String secondTab = 'All Tasks';
+  final String firstTab = myTasksString;
+  final String secondTab = allTasksString;
 
   @override
   State<TasksWidget> createState() => _TasksWidgetState();
@@ -68,13 +69,13 @@ ListView createEventTabListView(String? assignedUserId) {
   List<Event> completeEvents = eventAccessObject.getEvents(
       null, null, null, null, true, null, null);
 
-  var listItems = <Widget>[const Text('Incomplete')];
+  var listItems = <Widget>[const Text(incompleteString)];
   listItems.addAll(
     incompleteEvents.map(
       (event) => createEventListItem(event)
     ).toList()
   );
-  listItems.add(const Text('Complete'));
+  listItems.add(const Text(completeString));
   listItems.addAll(
     completeEvents.map(
         (event) => createEventListItem(event)

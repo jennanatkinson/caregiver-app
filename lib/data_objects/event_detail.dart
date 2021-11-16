@@ -3,9 +3,5 @@ class EventDetail {
   String name;
   final String typeId;
 
-  EventDetail(
-    this.id,
-    this.name,
-    this.typeId
-  );
+  EventDetail(this.id, this.name, this.typeId);
 }

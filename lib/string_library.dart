@@ -1,5 +1,13 @@
 class StringLibrary {
   static const Map<String, Map<String, String>> _strings = {
+    'LOGIN': {
+      'INVALID_LOGIN': 'Invalid username or password',
+      'LOGIN_BUTTON': 'Log In',
+      'MISSING_PASSWORD': 'Password required',
+      'MISSING_USERNAME': 'Username required',
+      'PASSWORD_PROMPT': 'Password',
+      'USERNAME_PROMPT': 'Username'
+    },
     'MAIN': {'APP_TITLE': 'Caregiver', 'CARE_PLAN_NAME': 'Evelyn\'s Care'},
     'NAVBAR': {
       'ADD_BUTTON': 'Add',

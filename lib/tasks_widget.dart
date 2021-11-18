@@ -1,19 +1,24 @@
-import 'package:caregiver_app/dao/event_access_object.dart';
 import 'package:caregiver_app/main_app_bar.dart';
 import 'package:caregiver_app/string_library.dart';
 import 'package:caregiver_app/subwidgets/event_list_widget.dart';
 import 'package:flutter/material.dart';
 
-EventAccessObject eventAccessObject = EventAccessObject();
-
 class TasksWidget extends StatefulWidget {
   TasksWidget(
-      {Key? key, required this.carePlanName, required this.patientInitials})
+      {Key? key,
+      required this.carePlanName,
+      required this.patientInitials,
+      required this.currentUser})
       : super(key: key);
   final String carePlanName;
   final String patientInitials;
+  String currentUser;
   final String _firstTab = StringLibrary.getString('TASKS', 'MY_TASKS_TAB');
   final String _secondTab = StringLibrary.getString('TASKS', 'ALL_TASKS_TAB');
+
+  set login(String userId) {
+    currentUser = userId;
+  }
 
   @override
   State<TasksWidget> createState() => _TasksWidgetState();
@@ -42,9 +47,9 @@ class _TasksWidgetState extends State<TasksWidget> {
           // Lists dependent on which tab is selected
           body: TabBarView(children: [
             // First tab (My Tasks)
-            EventListWidget(currentUser: 'U_000000000000', allTasks: false),
+            EventListWidget(currentUser: widget.currentUser, allTasks: false),
             // Second tab (All Tasks)
-            EventListWidget(currentUser: 'U_000000000000', allTasks: true)
+            EventListWidget(currentUser: widget.currentUser, allTasks: true)
           ])),
     ));
   }

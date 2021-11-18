@@ -25,9 +25,9 @@ class _EventListWidgetState extends State<EventListWidget> {
         null,
         false,
         null,
-        widget.allTasks ? widget.currentUser : null);
+        widget.allTasks ? null : widget.currentUser);
     List<Event> completeEvents = widget._eventAccessObject.getEvents(null, null,
-        null, null, true, null, widget.allTasks ? widget.currentUser : null);
+        null, null, true, null, widget.allTasks ? null : widget.currentUser);
 
     var listItems = <Widget>[
       Text(StringLibrary.getString('TASKS', 'INCOMPLETE_TASKS_HEADER'))

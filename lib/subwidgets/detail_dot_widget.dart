@@ -3,7 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class DetailDotWidget extends StatelessWidget {
-  const DetailDotWidget({Key? key}) : super(key: key);
+  const DetailDotWidget({Key? key, required this.typeColor}) : super(key: key);
+  final String typeColor;
   final double dotDiameter = 5.0;
 
   @override
@@ -17,8 +18,7 @@ class DetailDotWidget extends StatelessWidget {
         height: dotDiameter,
         // Shapes the container as a circle
         decoration: BoxDecoration(
-            color: Color((random.nextDouble() * 0xFFFFFF).toInt())
-                .withOpacity(1.0),
+            color: Color(int.parse(typeColor, radix: 16)).withOpacity(1.0),
             shape: BoxShape.circle));
   }
 }

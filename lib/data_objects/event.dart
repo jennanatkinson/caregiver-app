@@ -1,19 +1,19 @@
 import 'dart:math';
 
-import 'event_detail.dart';
+import 'package:caregiver_app/data_objects/detail.dart';
 
 class Event {
   final String id;
   String name;
   final String carePlanId;
-  List<EventDetail> eventDetails;
+  List<Detail> details;
   final int createdAt;
   int? dueAt;
   int? completedAt;
   int? notifyAt;
   String? assignedUserId;
 
-  Event(this.id, this.name, this.carePlanId, this.eventDetails, this.createdAt,
+  Event(this.id, this.name, this.carePlanId, this.details, this.createdAt,
       this.dueAt, this.completedAt, this.notifyAt, this.assignedUserId);
 
   toggleComplete() {
@@ -30,7 +30,7 @@ class Event {
 }
 
 Event generateRandomEvent(
-    String carePlanId, String name, List<EventDetail> eventDetails) {
+    String carePlanId, String name, List<Detail> details) {
   var random = Random();
 
   // Generates a number between 10^11 and 10^12
@@ -54,6 +54,6 @@ Event generateRandomEvent(
 
   var assignedUserId = random.nextBool() ? 'U_000000000000' : null;
 
-  return Event('E_$id', name, carePlanId, eventDetails, createdAt, dueAt,
+  return Event('E_$id', name, carePlanId, details, createdAt, dueAt,
       completedAt, notifyAt, assignedUserId);
 }

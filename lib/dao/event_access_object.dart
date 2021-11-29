@@ -10,13 +10,13 @@ class EventAccessObject {
 
   EventAccessObject._internal();
 
-  static final List<Event> eventData = List.generate(
+  final List<Event> eventData = List.generate(
       10,
       (int i) => generateRandomEvent('C_000000000000', 'Event $i',
           [DetailAccessObject.getDetail('D_000000000000')]),
       growable: true);
 
-  static List<Event> getEvents(
+  List<Event> getEvents(
     String? id,
     String? name,
     String? carePlanId,
@@ -41,5 +41,9 @@ class EventAccessObject {
       }
     }
     return events;
+  }
+
+  void createEvent(Event event) {
+    eventData.add(event);
   }
 }

@@ -5,11 +5,12 @@ import 'package:caregiver_app/subwidgets/event_list_item_widget.dart';
 import 'package:flutter/material.dart';
 
 class EventListWidget extends StatefulWidget {
-  const EventListWidget(
-      {Key? key, required this.currentUser, required this.allTasks})
+  EventListWidget({Key? key, required this.currentUser, required this.allTasks})
       : super(key: key);
   final String currentUser;
   final bool allTasks;
+
+  final EventAccessObject _eventAccessObject = EventAccessObject();
 
   @override
   State<StatefulWidget> createState() => _EventListWidgetState();
@@ -18,10 +19,16 @@ class EventListWidget extends StatefulWidget {
 class _EventListWidgetState extends State<EventListWidget> {
   @override
   Widget build(BuildContext context) {
-    List<Event> incompleteEvents = EventAccessObject.getEvents(null, null, null,
-        null, false, null, widget.allTasks ? null : widget.currentUser);
-    List<Event> completeEvents = EventAccessObject.getEvents(null, null, null,
-        null, true, null, widget.allTasks ? null : widget.currentUser);
+    List<Event> incompleteEvents = widget._eventAccessObject.getEvents(
+        null,
+        null,
+        null,
+        null,
+        false,
+        null,
+        widget.allTasks ? null : widget.currentUser);
+    List<Event> completeEvents = widget._eventAccessObject.getEvents(null, null,
+        null, null, true, null, widget.allTasks ? null : widget.currentUser);
 
     var listItems = <Widget>[
       Text(StringLibrary.getString('TASKS', 'INCOMPLETE_TASKS_HEADER'))

@@ -1,15 +1,16 @@
+import 'package:caregiver_app/add_widget.dart';
+import 'package:caregiver_app/events_widget.dart';
 import 'package:caregiver_app/string_library.dart';
-import 'package:caregiver_app/tasks_widget.dart';
 import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
 
 import 'login_widget.dart';
-import 'navbar_widget.dart';
+import 'subwidgets/navbar_widget.dart';
 
 void main() => runApp(CaregiverApp());
 
 class CaregiverApp extends StatefulWidget {
-  String? _currentUser;
+  // String? _currentUser;
 
   CaregiverApp({Key? key}) : super(key: key);
   final String _appTitle = StringLibrary.getString('MAIN', 'APP_TITLE');
@@ -18,25 +19,14 @@ class CaregiverApp extends StatefulWidget {
   int _currentView = 0;
   // Whether a user has been authorized
   bool _loggedIn = false;
-  // Main views in the app
-  // final List<Widget> _views = [
-  //   TasksWidget(
-  //     carePlanName: StringLibrary.getString('MAIN', 'CARE_PLAN_NAME'),
-  //     patientInitials: 'E',
-  //     currentUser: '',
-  //   ),
-  //   // Change to "Add" widget
-  //   const Icon(Icons.add, size: 150),
-  //   // Change to "Manage Care" widget
-  //   const Icon(Icons.people, size: 150),
-  //   // Change to "Settings" widget
-  //   const Icon(Icons.settings, size: 150)
-  // ];
-  final TasksWidget _tasks = TasksWidget(
+
+  final EventsWidget _tasks = EventsWidget(
     carePlanName: StringLibrary.getString('MAIN', 'CARE_PLAN_NAME'),
     patientInitials: 'E',
     currentUser: '',
   );
+  final AddWidget _add =
+      const AddWidget(carePlanId: 'C_000000000000', currentUser: '');
 
   @override
   State<StatefulWidget> createState() => _CaregiverAppState();
@@ -58,7 +48,7 @@ class _CaregiverAppState extends State<CaregiverApp> {
           body: [
             widget._tasks,
             // Change to "Add" widget
-            const Icon(Icons.add, size: 150),
+            widget._add,
             // Change to "Manage Care" widget
             const Icon(Icons.people, size: 150),
             // Change to "Settings" widget

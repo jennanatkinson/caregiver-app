@@ -41,17 +41,18 @@ const _secondaryColorMaterial =
 // Accent Color
 
 const mainColorScheme = ColorScheme(
-  // AppBar
-  primary: Colors.white,
+  // AppBar, ElevatedButton background, showDatePicker/showTimePicker button text
+  primary: _onPrimaryColorMaterial,
   primaryVariant: Colors.redAccent,
   // EventListItemWidget color
   secondary: _secondaryColorMaterial,
   secondaryVariant: Colors.orangeAccent,
-  surface: Colors.yellow,
+  // showTimePicker background
+  surface: Colors.white,
   background: Colors.yellowAccent,
   error: Colors.green,
   // AppBar leading and title, TabBar Tab text
-  onPrimary: _onPrimaryColorMaterial,
+  onPrimary: _secondaryColorMaterial,
   onSecondary: Colors.blue,
   onSurface: Colors.blueAccent,
   onBackground: Colors.indigo,
@@ -63,3 +64,5 @@ var mainThemeData = ThemeData(
   colorScheme: mainColorScheme,
   fontFamily: 'Poppins',
 );
+
+const standardPadding = EdgeInsets.all(20);

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key, required this.loginCallback}) : super(key: key);
   final Function loginCallback;
+  final loginPadding = const EdgeInsets.fromLTRB(60, 0, 60, 0);
 
   @override
   State<LoginWidget> createState() => _LoginWidgetState();
@@ -15,7 +16,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     return Scaffold(
         // Padding widget allows padding inside Scaffold
         body: Padding(
-            padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+            padding: widget.loginPadding,
             child: LoginFormWidget(loginCallback: widget.loginCallback)));
   }
 }

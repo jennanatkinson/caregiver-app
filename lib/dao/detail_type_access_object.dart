@@ -37,4 +37,8 @@ class DetailTypeAccessObject {
   static String getTypeColor(String id) {
     return getDetailType(id).color;
   }
+
+  static List<DetailType> getUserTypes(String userId) {
+    return typeData;
+  }
 }

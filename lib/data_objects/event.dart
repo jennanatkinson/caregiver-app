@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:caregiver_app/data_objects/detail.dart';
 
 class Event {
-  final String id;
+  String? id;
   String name;
   final String carePlanId;
   List<Detail> details;
@@ -15,6 +15,10 @@ class Event {
 
   Event(this.id, this.name, this.carePlanId, this.details, this.createdAt,
       this.dueAt, this.completedAt, this.notifyAt, this.assignedUserId);
+  Event.withoutId(this.name, this.carePlanId, this.details, this.createdAt,
+      this.dueAt, this.completedAt, this.notifyAt, this.assignedUserId) {
+    id = generateRandomId();
+  }
 
   toggleComplete() {
     if (completedAt == null) {
@@ -33,11 +37,7 @@ Event generateRandomEvent(
     String carePlanId, String name, List<Detail> details) {
   var random = Random();
 
-  // Generates a number between 10^11 and 10^12
-  var id = 100000000000 +
-      ((random.nextInt(4294967296) << 32) | random.nextInt(4294967296)) %
-          899999999999;
-
+  var id = generateRandomId();
   int now = DateTime.now().millisecondsSinceEpoch;
   const int weekInMilliseconds = 604800000;
   // Generates a date between a week ago and now
@@ -54,6 +54,12 @@ Event generateRandomEvent(
 
   var assignedUserId = random.nextBool() ? 'U_000000000000' : null;
 
-  return Event('E_$id', name, carePlanId, details, createdAt, dueAt,
-      completedAt, notifyAt, assignedUserId);
+  return Event(id, name, carePlanId, details, createdAt, dueAt, completedAt,
+      notifyAt, assignedUserId);
+}
+
+String generateRandomId() {
+  var random = Random();
+  // Generates a number between 10^11 and 10^12
+  return 'E_${100000000000 + ((random.nextInt(4294967296) << 32) | random.nextInt(4294967296)) % 899999999999}';
 }

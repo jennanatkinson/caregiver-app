@@ -1,7 +1,5 @@
-import 'package:caregiver_app/data_objects/event_detail.dart';
-
-import '../data_objects/event.dart';
-import '../data_objects/event_detail.dart';
+import 'package:caregiver_app/dao/detail_access_object.dart';
+import 'package:caregiver_app/data_objects/event.dart';
 
 class EventAccessObject {
   static final EventAccessObject _singleton = EventAccessObject._internal();
@@ -14,14 +12,8 @@ class EventAccessObject {
 
   final List<Event> eventData = List.generate(
       10,
-      (int i) => generateRandomEvent(
-          'C_000000000000',
-          'Event $i',
-          List.generate(
-            1,
-            (int i) =>
-                EventDetail('D_000000000000', 'Detail $i', 'T_000000000000'),
-          )),
+      (int i) => generateRandomEvent('C_000000000000', 'Event $i',
+          [DetailAccessObject.getDetail('D_000000000000')]),
       growable: true);
 
   List<Event> getEvents(
@@ -49,5 +41,9 @@ class EventAccessObject {
       }
     }
     return events;
+  }
+
+  void createEvent(Event event) {
+    eventData.add(event);
   }
 }

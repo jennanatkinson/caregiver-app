@@ -1,3 +1,4 @@
+import 'package:caregiver_app/dao/detail_type_access_object.dart';
 import 'package:caregiver_app/data_objects/event.dart';
 import 'package:caregiver_app/subwidgets/detail_dot_widget.dart';
 import 'package:caregiver_app/subwidgets/event_timestamp_widget.dart';
@@ -32,9 +33,10 @@ class _EventListItemWidgetState extends State<EventListItemWidget> {
                   })),
           // Event Detail Indicators
           Column(
-              children: widget.event.eventDetails
-                  .map((eventDetail) => const DetailDotWidget())
-                  .toList()),
+              children: widget.event.details.map((detail) {
+            String color = DetailTypeAccessObject.getTypeColor(detail.typeId);
+            return DetailDotWidget(typeColor: color);
+          }).toList()),
           // Event Info
           Column(children: [
             // Event Name
@@ -43,7 +45,7 @@ class _EventListItemWidgetState extends State<EventListItemWidget> {
                 child: Text(widget.event.name)),
             // Event Details
             Row(
-                children: widget.event.eventDetails
+                children: widget.event.details
                     .map((eventDetail) => Text(eventDetail.name))
                     .toList())
           ]),

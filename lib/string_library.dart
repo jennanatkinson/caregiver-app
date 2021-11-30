@@ -16,6 +16,11 @@ class StringLibrary {
       'SETTINGS_BUTTON': 'Settings',
       'TASKS_BUTTON': 'Tasks'
     },
+    'NEW_EVENT': {
+      'EVENT_NAME': 'Event Name',
+      'SUBMIT': 'Submit',
+      'UNASSIGNED': 'Unassigned'
+    },
     'TASKS': {
       'ALL_TASKS_TAB': 'All Tasks',
       'COMPLETE_TASKS_HEADER': 'Complete Tasks',

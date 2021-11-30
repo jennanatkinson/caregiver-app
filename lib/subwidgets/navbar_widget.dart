@@ -1,6 +1,6 @@
 import 'package:caregiver_app/string_library.dart';
 import 'package:flutter/material.dart';
-import 'theme/colors.dart';
+import '../theme/colors.dart';
 
 class NavbarWidget extends StatefulWidget {
   NavbarWidget(

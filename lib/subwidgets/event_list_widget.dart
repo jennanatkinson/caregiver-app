@@ -9,6 +9,7 @@ class EventListWidget extends StatefulWidget {
       : super(key: key);
   final String currentUser;
   final bool allTasks;
+
   final EventAccessObject _eventAccessObject = EventAccessObject();
 
   @override

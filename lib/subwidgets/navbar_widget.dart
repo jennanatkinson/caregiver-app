@@ -1,6 +1,6 @@
 import 'package:caregiver_app/string_library.dart';
 import 'package:flutter/material.dart';
-import '../theme/colors.dart';
+import '../theme.dart';
 
 class NavbarWidget extends StatefulWidget {
   NavbarWidget(
@@ -28,21 +28,26 @@ class _NavbarWidgetState extends State<NavbarWidget> {
         selectedFontSize: 12.0,
         unselectedFontSize: 12.0,
         backgroundColor: Colors.white,
-        selectedItemColor: CustomColors.getColor(CustomColors.teal, 400),
+        selectedItemColor: onPrimaryColorMaterial.shade400,
         unselectedItemColor: Colors.black,
         onTap: onTabTapped,
         currentIndex: widget.activePosition,
         items: [
           BottomNavigationBarItem(
-              icon: const Icon(Icons.check_box), label: widget._tasksButton),
+              icon: const Icon(Icons.check_box, size: 30),
+              label: widget._tasksButton),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.history), label: widget._historyButton),
+              icon: const Icon(Icons.history, size: 30),
+              label: widget._historyButton),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.add), label: widget._addButton),
+              icon: const Icon(Icons.add_circle, size: 40, color: onTertiaryColorMaterial),
+              label: widget._addButton),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.people), label: widget._manageCareButton),
+              icon: const Icon(Icons.people, size: 30),
+              label: widget._manageCareButton),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.settings), label: widget._settingsButton)
+              icon: const Icon(Icons.settings, size: 30),
+              label: widget._settingsButton)
         ]);
   }
 

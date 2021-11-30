@@ -4,59 +4,75 @@ import 'package:flutter/material.dart';
 // Primary Color
 // https://maketintsandshades.com/#048ABF
 const _onPrimaryColorValue = 0xFF048ABF;
-const _onPrimaryColorMaterial = MaterialColor(
+const onPrimaryColorMaterial = MaterialColor(
   _onPrimaryColorValue,
   <int, Color>{
-    50: Color(0xFFE6F3F9), // Tint 90%
-    100: Color(0xFFCDE8F2), // Tint 80%
-    200: Color(0xFF9DB0E5), // Tint 60%
-    300: Color(0xFF68B9D9), // Tint 40%
-    400: Color(0xFF36A1CC), // Tint 20%
-    500: Color(_onPrimaryColorValue),
-    600: Color(0xFF036E99), // Shade 20%
-    700: Color(0xFF025373), // Shade 40%
-    800: Color(0xFF02375C), // Shade 60%
-    900: Color(0xFF011C26) // Shade 80%
+    50: Color(0xFFF2FBFC),
+    100: Color(0xFFC0EBEF),
+    200: Color(0xFF81D6DF),
+    300: Color(0xFF04ADC0),
+    350: Color(0xFD048ABF), //30% transparent
+    400: Color(_onPrimaryColorValue),
+    500: Color(0xFF02455F)
   },
 );
 
 // Secondary Color
-const _secondaryColorValue = 0xFFF69419;
-const _secondaryColorMaterial =
-    MaterialColor(_secondaryColorValue, <int, Color>{
-  50: Color(0xFFFEF4E8), // Tint 90%
-  100: Color(0xFFFDEAD1), // Tint 80%
-  200: Color(0xFFFBD4A3), // Tint 60%
-  300: Color(0xFFFABF75), // Tint 40%
-  400: Color(0xFFF8A947), // Tint 20%
-  500: Color(_secondaryColorValue),
-  600: Color(0xFFC57614), // Shade 20%
-  700: Color(0xFF94590F), // Shade 40%
-  800: Color(0xFF623B0A), // Shade 60%
-  900: Color(0xFF311E05) // Shade 80%
-});
+const _onSecondaryColorValue = 0xFFF6B541;
+const onSecondaryColorMaterial = MaterialColor(
+  _onSecondaryColorValue,
+  <int, Color>{
+    50: Color(0xFFFEF9F1),
+    100: Color(0xFFFDECCF),
+    200: Color(0xFFFBDAA0),
+    300: Color(_onSecondaryColorValue),
+    400: Color(0xFFF69419),
+  }
+);
 
 // Tertiary Color
+const _onTertiaryColorValue = 0xFFF3694D;
+const onTertiaryColorMaterial = MaterialColor(
+    _onTertiaryColorValue,
+    <int, Color>{
+      50: Color(0xFFFDECE9),
+      100: Color(0xFFFCD9D3),
+      200: Color(0xFFF9B4A6),
+      300: Color(_onTertiaryColorValue),
+    }
+);
 
-// Accent Color
+// Greys
+const _onGreyColorValue = 0xFF888787;
+const onGreyColorMaterial = MaterialColor(
+    _onGreyColorValue,
+    <int, Color>{
+      50: Color(0xFFEDEDED),
+      100: Color(0xFFDBDBDB),
+      200: Color(0xFFC3C3C3),
+      300: Color(0xFFA09F9F),
+      400: Color(_onGreyColorValue),
+      500: Color(0xFF5F5E5E)
+    }
+);
 
 const mainColorScheme = ColorScheme(
   // AppBar, ElevatedButton background, showDatePicker/showTimePicker button text
-  primary: _onPrimaryColorMaterial,
-  primaryVariant: Colors.redAccent,
+  primary: onPrimaryColorMaterial,
+  primaryVariant: onSecondaryColorMaterial,
   // EventListItemWidget color
-  secondary: _secondaryColorMaterial,
-  secondaryVariant: Colors.orangeAccent,
+  secondary: onSecondaryColorMaterial,
+  secondaryVariant: onTertiaryColorMaterial,
   // showTimePicker background
   surface: Colors.white,
-  background: Colors.yellowAccent,
-  error: Colors.green,
+  background: onPrimaryColorMaterial,
+  error: onTertiaryColorMaterial,
   // AppBar leading and title, TabBar Tab text
-  onPrimary: _secondaryColorMaterial,
-  onSecondary: Colors.blue,
-  onSurface: Colors.blueAccent,
-  onBackground: Colors.indigo,
-  onError: Colors.indigoAccent,
+  onPrimary: Colors.black,
+  onSecondary: Colors.white,
+  onSurface: Colors.black,
+  onBackground: Colors.black,
+  onError: Colors.white,
   brightness: Brightness.light,
 );
 
@@ -65,4 +81,4 @@ var mainThemeData = ThemeData(
   fontFamily: 'Poppins',
 );
 
-const standardPadding = EdgeInsets.all(20);
+const standardPadding = EdgeInsets.all(16);

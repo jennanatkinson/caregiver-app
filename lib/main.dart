@@ -1,6 +1,6 @@
 import 'package:caregiver_app/string_library.dart';
 import 'package:caregiver_app/tasks_widget.dart';
-import 'package:caregiver_app/theme.dart';
+import 'package:caregiver_app/theme/main_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'login_widget.dart';
@@ -58,6 +58,7 @@ class _CaregiverAppState extends State<CaregiverApp> {
           body: [
             widget._tasks,
             // Change to "Add" widget
+            const Icon(Icons.history, size: 150),
             const Icon(Icons.add, size: 150),
             // Change to "Manage Care" widget
             const Icon(Icons.people, size: 150),
@@ -70,7 +71,7 @@ class _CaregiverAppState extends State<CaregiverApp> {
             swapViewCallback: swapViewCallback,
           ),
         ),
-        theme: mainThemeData);
+        theme: CustomTheme.lightTheme);
   }
 
   // Updates the currently active view. Called by the bottom navigation bar

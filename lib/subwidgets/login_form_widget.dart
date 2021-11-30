@@ -53,7 +53,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             obscureText: true,
             validator: (String? value) {
               return (value == null || value.isEmpty)
-                  ? StringLibrary.getString('LOGIN', 'MISSING_USERNAME')
+                  ? StringLibrary.getString('LOGIN', 'MISSING_PASSWORD')
                   : null;
             }),
         // Padding between password text box and login button

@@ -30,12 +30,6 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         snap: _snap,
         expandedHeight: _expandedHeight,
 
-        // Drawer Button
-        /*leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {},
-        ),*/
-
         // Title
         title: Text(carePlanName),
         centerTitle: true,

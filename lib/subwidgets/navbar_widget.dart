@@ -1,6 +1,6 @@
 import 'package:caregiver_app/string_library.dart';
 import 'package:flutter/material.dart';
-import '../theme.dart';
+import 'package:caregiver_app/theme.dart';
 
 class NavbarWidget extends StatefulWidget {
   NavbarWidget(
@@ -21,6 +21,9 @@ class NavbarWidget extends StatefulWidget {
 }
 
 class _NavbarWidgetState extends State<NavbarWidget> {
+  static const double _buttonSize = 30;
+  static const double _addButtonSize = 40;
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -34,19 +37,19 @@ class _NavbarWidgetState extends State<NavbarWidget> {
         currentIndex: widget.activePosition,
         items: [
           BottomNavigationBarItem(
-              icon: const Icon(Icons.check_box, size: 30),
+              icon: const Icon(Icons.check_box, size: _buttonSize),
               label: widget._tasksButton),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.history, size: 30),
+              icon: const Icon(Icons.history, size: _buttonSize),
               label: widget._historyButton),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.add_circle, size: 40, color: onTertiaryColorMaterial),
+              icon: const Icon(Icons.add_circle, size: _addButtonSize, color: onTertiaryColorMaterial),
               label: widget._addButton),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.people, size: 30),
+              icon: const Icon(Icons.people, size: _buttonSize),
               label: widget._manageCareButton),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.settings, size: 30),
+              icon: const Icon(Icons.settings, size: _buttonSize),
               label: widget._settingsButton)
         ]);
   }

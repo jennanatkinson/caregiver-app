@@ -11,7 +11,6 @@ const onPrimaryColorMaterial = MaterialColor(
     100: Color(0xFFC0EBEF),
     200: Color(0xFF81D6DF),
     300: Color(0xFF04ADC0),
-    350: Color(0xFD048ABF), //30% transparent
     400: Color(_onPrimaryColorValue),
     500: Color(0xFF02455F)
   },

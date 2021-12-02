@@ -19,7 +19,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double _expandedHeight = 90;
   final bool _floating = true;
   final bool _pinned = true;
-  final bool snap = true;
+  final bool _snap = true;
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +27,8 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         // Scrolling Behavior
         floating: _floating,
         pinned: _pinned,
-        snap: snap,
+        snap: _snap,
         expandedHeight: _expandedHeight,
-
-        // Drawer Button
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {},
-        ),
 
         // Title
         title: Text(carePlanName),

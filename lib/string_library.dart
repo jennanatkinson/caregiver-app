@@ -12,7 +12,7 @@ class StringLibrary {
     'NAVBAR': {
       'ADD_BUTTON': 'Add',
       'HISTORY_BUTTON': 'History',
-      'MANAGE_CARE_BUTTON': 'Manage Care',
+      'MANAGE_CARE_BUTTON': 'Manage', //Manage Care
       'SETTINGS_BUTTON': 'Settings',
       'TASKS_BUTTON': 'Tasks'
     },

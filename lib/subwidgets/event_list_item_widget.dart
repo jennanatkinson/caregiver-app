@@ -18,8 +18,7 @@ class _EventListItemWidgetState extends State<EventListItemWidget> {
   Widget build(BuildContext context) {
     return Container(
         margin: const EdgeInsets.all(5),
-        // I haven't figured out how to get a shade (e.g. secondary[100] to work
-        color: Theme.of(context).colorScheme.secondary,
+        color: Theme.of(context).colorScheme.primary.withOpacity(.1),
         // color: Colors.orange[200],
         child: Row(children: [
           // Button to mark complete/incomplete

@@ -3,6 +3,7 @@ class StringLibrary {
     'LOGIN': {
       'INVALID_LOGIN': 'Invalid username or password',
       'LOGIN_BUTTON': 'Log In',
+      'LOGOUT_BUTTON': 'Log Out',
       'MISSING_PASSWORD': 'Password required',
       'MISSING_USERNAME': 'Username required',
       'PASSWORD_PROMPT': 'Password',

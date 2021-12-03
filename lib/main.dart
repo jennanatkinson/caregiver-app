@@ -1,5 +1,6 @@
 import 'package:caregiver_app/add_widget.dart';
 import 'package:caregiver_app/events_widget.dart';
+import 'package:caregiver_app/settings.dart';
 import 'package:caregiver_app/string_library.dart';
 import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,9 @@ class CaregiverApp extends StatefulWidget {
   final AddWidget _add =
       const AddWidget(carePlanId: 'C_000000000000', currentUser: '');
 
+  final SettingsWidget _settings =
+      const SettingsWidget(carePlanId: 'C_000000000000', currentUser: '');
+
   @override
   State<StatefulWidget> createState() => _CaregiverAppState();
 }
@@ -52,7 +56,7 @@ class _CaregiverAppState extends State<CaregiverApp> {
             // Change to "Manage Care" widget
             const Icon(Icons.people, size: 150),
             // Change to "Settings" widget
-            const Icon(Icons.settings, size: 150)
+            widget._settings, //const Icon(Icons.settings, size: 150)
           ].elementAt(widget._currentView),
           // Tabs to swap between the main views
           bottomNavigationBar: NavbarWidget(

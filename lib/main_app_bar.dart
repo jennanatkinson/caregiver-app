@@ -21,12 +21,13 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool _floating = true;
   final bool _pinned = true;
   final bool _snap = true;
-  static const double _topPadding = 50;
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
         //TODO: Figure out how to add margin or padding to this
+        // Scaffold(
+        //appBar: AppBar(
         // Scrolling Behavior
         floating: _floating,
         pinned: _pinned,

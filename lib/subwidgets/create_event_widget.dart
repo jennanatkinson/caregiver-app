@@ -82,7 +82,8 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
             ]),
           paddingBetweenItems,
           ElevatedButton(
-              onPressed: () => _submitEvent(context),
+              onPressed: () =>
+                  _submitEvent(context), //TODO: Navigate back to tasks
               child: Text(StringLibrary.getString('NEW_EVENT', 'SUBMIT')))
         ]));
   }

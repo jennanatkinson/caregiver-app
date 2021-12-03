@@ -81,3 +81,9 @@ var mainThemeData = ThemeData(
 );
 
 const standardPadding = EdgeInsets.all(16);
+const noPadding = EdgeInsets.all(0);
+
+const double smallTextSize = 12;
+const double mediumSmallTextSize = 15;
+const double mediumTextSize = 20;
+const double mediumLargeTextSize = 25;

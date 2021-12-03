@@ -1,5 +1,5 @@
 import 'package:caregiver_app/string_library.dart';
-import 'package:caregiver_app/subwidgets/buttons.dart';
+import 'package:caregiver_app/subwidgets/primary_custom_button.dart';
 import 'package:flutter/material.dart';
 
 class SettingsWidget extends StatefulWidget {
@@ -30,7 +30,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  MyButtonWidget(
+                  PrimaryCustomButton(
                       string: StringLibrary.getString('LOGIN', 'LOGOUT_BUTTON'),
                       onPressed: () => {} //logOut(),
                       )

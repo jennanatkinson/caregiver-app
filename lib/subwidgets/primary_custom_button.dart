@@ -1,8 +1,8 @@
 import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
 
-class MyButtonWidget extends StatelessWidget {
-  const MyButtonWidget(
+class PrimaryCustomButton extends StatelessWidget {
+  const PrimaryCustomButton(
       {Key? key, required this.string, required this.onPressed})
       : super(key: key);
   final String string;

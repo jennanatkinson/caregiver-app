@@ -1,9 +1,8 @@
 import 'package:caregiver_app/data_objects/event.dart';
+import 'package:caregiver_app/subwidgets/event_list_widget.dart';
 import 'package:caregiver_app/subwidgets/event_timestamp_widget.dart';
 import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
-
-import 'event_list_widget.dart';
 
 class EventListItemWidget extends StatefulWidget {
   const EventListItemWidget({Key? key, required this.event}) : super(key: key);
@@ -19,20 +18,12 @@ class _EventListItemWidgetState extends State<EventListItemWidget> {
   static const double _taskBoxPadding = 14;
   static const double _checkBoxSize = 28;
 
-  Color getEventBackgroundColor() {
-    if (widget.event.isComplete()) {
-      return onSecondaryColorMaterial.shade200;
-    } else {
-      return onSecondaryColorMaterial.shade100;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
         margin: const EdgeInsets.only(top: _marginBetweenListItems),
         padding: const EdgeInsets.all(10.0),
-        color: getEventBackgroundColor(),
+        color: _getEventBackgroundColor(),
         child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -89,5 +80,13 @@ class _EventListItemWidgetState extends State<EventListItemWidget> {
                   //alignment: Alignment.topRight,
                   children: [EventTimestampWidget(event: widget.event)])
             ]));
+  }
+
+  Color _getEventBackgroundColor() {
+    if (widget.event.isComplete()) {
+      return onSecondaryColorMaterial.shade200;
+    } else {
+      return onSecondaryColorMaterial.shade100;
+    }
   }
 }

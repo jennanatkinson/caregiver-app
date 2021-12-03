@@ -47,7 +47,7 @@ class _EventsWidgetState extends State<EventsWidget> {
           },
           // Lists dependent on which tab is selected
           body: Padding(
-              padding: noPadding, //standardPadding
+              padding: noPadding,
               child: TabBarView(children: [
                 // First tab (My Tasks)
                 EventListWidget(

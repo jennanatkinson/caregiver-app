@@ -1,7 +1,7 @@
 import 'package:caregiver_app/dao/event_access_object.dart';
 import 'package:caregiver_app/data_objects/event.dart';
 import 'package:caregiver_app/string_library.dart';
-import 'package:caregiver_app/subwidgets/buttons.dart';
+import 'package:caregiver_app/subwidgets/primary_custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -82,7 +82,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                           StringLibrary.getString('NEW_EVENT', 'UNASSIGNED')))
             ]),
           paddingBetweenItems,
-          MyButtonWidget(
+          PrimaryCustomButton(
               onPressed: () =>
                   _submitEvent(context), //TODO: Navigate back to tasks
               string: StringLibrary.getString('NEW_EVENT', 'SUBMIT'))

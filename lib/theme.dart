@@ -18,42 +18,35 @@ const onPrimaryColorMaterial = MaterialColor(
 
 // Secondary Color
 const _onSecondaryColorValue = 0xFFF6B541;
-const onSecondaryColorMaterial = MaterialColor(
-  _onSecondaryColorValue,
-  <int, Color>{
-    50: Color(0xFFFEF9F1),
-    100: Color(0xFFFDECCF),
-    200: Color(0xFFFBDAA0),
-    300: Color(_onSecondaryColorValue),
-    400: Color(0xFFF69419),
-  }
-);
+const onSecondaryColorMaterial =
+    MaterialColor(_onSecondaryColorValue, <int, Color>{
+  50: Color(0xFFFEF9F1),
+  100: Color(0xFFFDECCF),
+  200: Color(0xFFFBDAA0),
+  300: Color(_onSecondaryColorValue),
+  400: Color(0xFFF69419),
+});
 
 // Tertiary Color
 const _onTertiaryColorValue = 0xFFF3694D;
-const onTertiaryColorMaterial = MaterialColor(
-    _onTertiaryColorValue,
-    <int, Color>{
-      50: Color(0xFFFDECE9),
-      100: Color(0xFFFCD9D3),
-      200: Color(0xFFF9B4A6),
-      300: Color(_onTertiaryColorValue),
-    }
-);
+const onTertiaryColorMaterial =
+    MaterialColor(_onTertiaryColorValue, <int, Color>{
+  50: Color(0xFFFDECE9),
+  100: Color(0xFFFCD9D3),
+  200: Color(0xFFF9B4A6),
+  300: Color(_onTertiaryColorValue),
+});
 
 // Greys
 const _onGreyColorValue = 0xFF888787;
-const onGreyColorMaterial = MaterialColor(
-    _onGreyColorValue,
-    <int, Color>{
-      50: Color(0xFFEDEDED),
-      100: Color(0xFFDBDBDB),
-      200: Color(0xFFC3C3C3),
-      300: Color(0xFFA09F9F),
-      400: Color(_onGreyColorValue),
-      500: Color(0xFF5F5E5E)
-    }
-);
+const onGreyColorMaterial = MaterialColor(_onGreyColorValue, <int, Color>{
+  50: Color(0xFFEDEDED),
+  100: Color(0xFFDBDBDB),
+  200: Color(0xFFC3C3C3),
+  300: Color(0xFFA09F9F),
+  400: Color(_onGreyColorValue),
+  500: Color(0xFF5F5E5E)
+});
 
 const mainColorScheme = ColorScheme(
   // AppBar, ElevatedButton background, showDatePicker/showTimePicker button text
@@ -76,8 +69,17 @@ const mainColorScheme = ColorScheme(
 );
 
 var mainThemeData = ThemeData(
-  colorScheme: mainColorScheme,
-  fontFamily: 'Poppins',
-);
+    colorScheme: mainColorScheme,
+    fontFamily: 'Poppins',
+    buttonTheme: ButtonThemeData(
+      buttonColor: onPrimaryColorMaterial.shade400,
+      textTheme: ButtonTextTheme.primary,
+    ));
 
 const standardPadding = EdgeInsets.all(16);
+const noPadding = EdgeInsets.all(0);
+
+const double smallTextSize = 12;
+const double mediumSmallTextSize = 15;
+const double mediumTextSize = 20;
+const double mediumLargeTextSize = 25;

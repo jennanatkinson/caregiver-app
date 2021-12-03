@@ -1,3 +1,4 @@
+import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -24,21 +25,30 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
+        //TODO: Figure out how to add margin or padding to this
+        // Scaffold(
+        //appBar: AppBar(
         // Scrolling Behavior
         floating: _floating,
         pinned: _pinned,
         snap: _snap,
         expandedHeight: _expandedHeight,
+        backgroundColor: Colors.white,
 
         // Title
-        title: Text(carePlanName),
+        title: Text(carePlanName,
+            style: const TextStyle(
+              fontSize: mediumLargeTextSize,
+              fontWeight: FontWeight.w300,
+            )),
         centerTitle: true,
+        collapsedHeight: 60.0, //this makes it so it doesn't collapse
 
         // Patient Icon
         actions: <Widget>[
           MaterialButton(
             child: CircleAvatar(
-              // backgroundColor: Theme.of(context).colorScheme.primary,
+              backgroundColor: onPrimaryColorMaterial.shade100,
               child: Text(patientInitials),
             ),
             onPressed: () {},
@@ -47,8 +57,10 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
 
         // Context Tabs
         bottom: TabBar(
-            //IndicatorColor: Theme.of(context).secondaryHeaderColor,
-            labelColor: Theme.of(context).primaryColor,
+            unselectedLabelColor: onPrimaryColorMaterial.shade400,
+            //TODO: Style the unselected tab's background
+            indicator: BoxDecoration(color: onPrimaryColorMaterial.shade400),
+            labelColor: Colors.white,
             tabs: [Tab(text: firstTab), Tab(text: secondTab)]));
   }
 }

@@ -47,7 +47,6 @@ class _CaregiverAppState extends State<CaregiverApp> {
           // body: widget._views.elementAt(widget._currentView),
           body: [
             widget._tasks,
-            // Change to "Add" widget
             const Icon(Icons.history, size: 150),
             widget._add,
             // Change to "Manage Care" widget

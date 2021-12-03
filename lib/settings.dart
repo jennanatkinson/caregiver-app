@@ -30,7 +30,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  MainButtonWidget(
+                  MyButtonWidget(
                       string: StringLibrary.getString('LOGIN', 'LOGOUT_BUTTON'),
                       onPressed: () => {} //logOut(),
                       )

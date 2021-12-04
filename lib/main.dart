@@ -5,6 +5,7 @@ import 'package:caregiver_app/string_library.dart';
 import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
 
+import 'history_widget.dart';
 import 'login_widget.dart';
 import 'subwidgets/navbar_widget.dart';
 
@@ -24,7 +25,10 @@ class CaregiverApp extends StatefulWidget {
   final EventsWidget _tasks = EventsWidget(
     carePlanName: StringLibrary.getString('MAIN', 'CARE_PLAN_NAME'),
     patientInitials: 'E',
-    currentUser: '',
+  );
+  final HistoryWidget _history = HistoryWidget(
+    carePlanName: StringLibrary.getString('MAIN', 'CARE_PLAN_NAME'),
+    patientInitials: 'E',
   );
   final AddWidget _add =
       const AddWidget(carePlanId: 'C_000000000000', currentUser: '');
@@ -51,7 +55,7 @@ class _CaregiverAppState extends State<CaregiverApp> {
           // body: widget._views.elementAt(widget._currentView),
           body: [
             widget._tasks,
-            const Icon(Icons.history, size: 150),
+            widget._history,
             widget._add,
             // Change to "Manage Care" widget
             const Icon(Icons.people, size: 150),
@@ -77,7 +81,8 @@ class _CaregiverAppState extends State<CaregiverApp> {
   void loginCallback(String userId) {
     setState(() {
       widget._loggedIn = true;
-      widget._tasks.currentUser = userId;
+      widget._tasks.login = userId;
+      widget._history.login = userId;
     });
   }
 

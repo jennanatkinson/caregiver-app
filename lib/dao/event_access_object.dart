@@ -46,4 +46,12 @@ class EventAccessObject {
   void createEvent(Event event) {
     eventData.add(event);
   }
+
+  void save(Event event) {
+    for (int i = 0; i < eventData.length; i++) {
+      if (eventData.elementAt(i).id == event.id) {
+        eventData[i] = event;
+      }
+    }
+  }
 }

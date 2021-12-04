@@ -27,7 +27,8 @@ class StringLibrary {
       'COMPLETE_TASKS_HEADER': 'Complete Tasks',
       'INCOMPLETE_TASKS_HEADER': 'Incomplete Tasks',
       'MY_TASKS_TAB': 'My Tasks'
-    }
+    },
+    'HISTORY': {'TIMELINE_TAB': 'Timeline', 'CALENDAR_TAB': 'Calendar'}
   };
 
   static String getString(String category, String name) {

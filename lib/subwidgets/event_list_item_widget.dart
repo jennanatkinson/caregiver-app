@@ -1,3 +1,5 @@
+import 'package:caregiver_app/dao/detail_type_access_object.dart';
+import 'package:caregiver_app/dao/event_access_object.dart';
 import 'package:caregiver_app/data_objects/event.dart';
 import 'package:caregiver_app/subwidgets/event_list_widget.dart';
 import 'package:caregiver_app/subwidgets/event_timestamp_widget.dart';
@@ -5,8 +7,12 @@ import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
 
 class EventListItemWidget extends StatefulWidget {
-  const EventListItemWidget({Key? key, required this.event}) : super(key: key);
+  EventListItemWidget(
+      {Key? key, required this.event, required this.removeItemCallback})
+      : super(key: key);
   final Event event;
+  final VoidCallback removeItemCallback;
+  final EventAccessObject _eventAccessObject = EventAccessObject();
 
   @override
   State<StatefulWidget> createState() => _EventListItemWidgetState();
@@ -16,7 +22,7 @@ class _EventListItemWidgetState extends State<EventListItemWidget> {
   final double _eventListItemHeight = 70;
   static const double _marginBetweenListItems = 10;
   static const double _taskBoxPadding = 14;
-  static const double _checkBoxSize = 28;
+  static const double _leadingIconSize = 28;
 
   @override
   Widget build(BuildContext context) {
@@ -28,31 +34,14 @@ class _EventListItemWidgetState extends State<EventListItemWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              // Button to mark complete/incomplete
+              // Checkbox or Circle
               Container(
-                  //color: Colors.pink,
-                  height: _checkBoxSize,
-                  width: _checkBoxSize + _taskBoxPadding + taskListPaddingLeft,
-                  padding: const EdgeInsets.only(right: _taskBoxPadding),
-                  child: Transform.scale(
-                      scale: 1.3,
-                      child: Checkbox(
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                          activeColor: onSecondaryColorMaterial.shade300,
-                          checkColor: Colors.black,
-                          value: widget.event.isComplete(),
-                          onChanged: (value) {
-                            setState(() {
-                              widget.event.toggleComplete();
-                            });
-                          }))),
-              // Event Detail Indicators //TODO: Talk about how to format this, should be toggled to be either the circle one or the checkbox, not both
-              /*Column(
-                  children: widget.event.details.map((detail) {
-                String color = DetailTypeAccessObject.getTypeColor(detail.typeId);
-                return DetailDotWidget(typeColor: color);
-              }).toList()),*/
+                  height: _leadingIconSize,
+                  width:
+                      _leadingIconSize + _taskBoxPadding + taskListPaddingLeft,
+                  padding:
+                      const EdgeInsets.only(right: _taskBoxPadding, top: 7),
+                  child: _getEventLeadingIcon()),
               // Event Info
               Expanded(
                   child: SizedBox(
@@ -82,11 +71,44 @@ class _EventListItemWidgetState extends State<EventListItemWidget> {
             ]));
   }
 
-  Color _getEventBackgroundColor() {
-    if (widget.event.isComplete()) {
-      return onSecondaryColorMaterial.shade200;
+  Color _getEventColor() {
+    if (widget.event.details.isNotEmpty) {
+      return DetailTypeAccessObject.getTypeColor(
+          widget.event.details[0].typeId);
     } else {
-      return onSecondaryColorMaterial.shade100;
+      return onSecondaryColorMaterial.shade200;
+    }
+  }
+
+  Color _getEventBackgroundColor() {
+    if (widget.event.details.isNotEmpty) {
+      return _getEventColor().withOpacity(.30);
+    } else {
+      return _getEventColor();
+    }
+  }
+
+  Widget _getEventLeadingIcon() {
+    if (widget.event.isComplete()) {
+      return Container(
+        decoration:
+            BoxDecoration(shape: BoxShape.circle, color: _getEventColor()),
+      );
+    } else {
+      return Transform.scale(
+          scale: 1.3,
+          child: Checkbox(
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              activeColor: onGreyColorMaterial,
+              checkColor: Colors.black,
+              value: widget.event.isComplete(),
+              onChanged: (value) {
+                setState(() {
+                  widget.event.toggleComplete();
+                  widget._eventAccessObject.save(widget.event);
+                  widget.removeItemCallback();
+                });
+              }));
     }
   }
 }

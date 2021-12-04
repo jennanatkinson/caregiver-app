@@ -4,25 +4,25 @@ import 'package:caregiver_app/subwidgets/event_list_widget.dart';
 import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
 
-class EventsWidget extends StatefulWidget {
-  EventsWidget(
+class HistoryWidget extends StatefulWidget {
+  HistoryWidget(
       {Key? key, required this.carePlanName, required this.patientInitials})
       : super(key: key);
   final String carePlanName;
   final String patientInitials;
   String _currentUser = '';
-  final String _firstTab = StringLibrary.getString('TASKS', 'MY_TASKS_TAB');
-  final String _secondTab = StringLibrary.getString('TASKS', 'ALL_TASKS_TAB');
+  final String _firstTab = StringLibrary.getString('HISTORY', 'TIMELINE_TAB');
+  final String _secondTab = StringLibrary.getString('HISTORY', 'CALENDAR_TAB');
 
   set login(String userId) {
     _currentUser = userId;
   }
 
   @override
-  State<EventsWidget> createState() => _EventsWidgetState();
+  State<HistoryWidget> createState() => _HistoryWidgetState();
 }
 
-class _EventsWidgetState extends State<EventsWidget> {
+class _HistoryWidgetState extends State<HistoryWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,17 +46,16 @@ class _EventsWidgetState extends State<EventsWidget> {
           body: Padding(
               padding: noPadding,
               child: TabBarView(children: [
-                // First tab (My Tasks)
-                EventListWidget(
-                  currentUser: widget._currentUser,
-                  allTasks: false,
-                  showHistory: false,
-                ),
-                // Second tab (All Tasks)
+                // First tab (Recent)
                 EventListWidget(
                     currentUser: widget._currentUser,
                     allTasks: true,
-                    showHistory: false)
+                    showHistory: true),
+                // Second tab (Month)
+                EventListWidget(
+                    currentUser: widget._currentUser,
+                    allTasks: true,
+                    showHistory: true),
               ]))),
     ));
   }

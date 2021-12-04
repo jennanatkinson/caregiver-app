@@ -1,7 +1,9 @@
+import 'dart:ui';
+
 class DetailType {
   final String id;
   String name;
-  String color;
+  Color color;
 
   DetailType(this.id, this.name, this.color);
 }

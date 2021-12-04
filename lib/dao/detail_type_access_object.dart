@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:caregiver_app/data_objects/detail_type.dart';
 
 class DetailTypeAccessObject {
@@ -11,7 +13,7 @@ class DetailTypeAccessObject {
   DetailTypeAccessObject._internal();
 
   static final List<DetailType> typeData = [
-    DetailType('T_000000000000', 'Medication', '7B61FF')
+    DetailType('T_000000000000', 'Medication', const Color(0xFF7B61FF))
   ];
 
   static DetailType getDetailType(String id) {
@@ -34,7 +36,7 @@ class DetailTypeAccessObject {
     return false;
   }
 
-  static String getTypeColor(String id) {
+  static Color getTypeColor(String id) {
     return getDetailType(id).color;
   }
 

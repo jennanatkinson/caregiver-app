@@ -11,7 +11,7 @@ class DetailTypeWidget extends StatelessWidget {
       : super(key: key);
   final Icon icon;
   final String name;
-  final String color;
+  final Color color;
   final Function callback;
 
   @override

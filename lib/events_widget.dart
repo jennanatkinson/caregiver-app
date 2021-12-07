@@ -6,17 +6,16 @@ import 'package:flutter/material.dart';
 
 class EventsWidget extends StatefulWidget {
   EventsWidget(
-      {Key? key, required this.carePlanName, required this.patientInitials})
+      {Key? key,
+      required this.carePlanName,
+      required this.user,
+      required this.patientInitials})
       : super(key: key);
   final String carePlanName;
+  final String user;
   final String patientInitials;
-  String _currentUser = '';
   final String _firstTab = StringLibrary.getString('TASKS', 'MY_TASKS_TAB');
   final String _secondTab = StringLibrary.getString('TASKS', 'ALL_TASKS_TAB');
-
-  set login(String userId) {
-    _currentUser = userId;
-  }
 
   @override
   State<EventsWidget> createState() => _EventsWidgetState();
@@ -48,15 +47,13 @@ class _EventsWidgetState extends State<EventsWidget> {
               child: TabBarView(children: [
                 // First tab (My Tasks)
                 EventListWidget(
-                  currentUser: widget._currentUser,
+                  user: widget.user,
                   allTasks: false,
                   showHistory: false,
                 ),
                 // Second tab (All Tasks)
                 EventListWidget(
-                    currentUser: widget._currentUser,
-                    allTasks: true,
-                    showHistory: false)
+                    user: widget.user, allTasks: true, showHistory: false)
               ]))),
     ));
   }

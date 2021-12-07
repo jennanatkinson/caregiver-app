@@ -13,11 +13,13 @@ class StringLibrary {
     'NAVBAR': {
       'ADD_BUTTON': 'Add',
       'HISTORY_BUTTON': 'History',
-      'MANAGE_CARE_BUTTON': 'Manage', //Manage Care
+      'MANAGE_CARE_BUTTON': 'Manage',
       'SETTINGS_BUTTON': 'Settings',
       'TASKS_BUTTON': 'Tasks'
     },
     'NEW_EVENT': {
+      'ADD_DETAIL': 'Add Detail',
+      'SELECT_DETAIL_TYPE': 'Select Detail Type',
       'EVENT_NAME': 'Event Name',
       'SUBMIT': 'Submit',
       'UNASSIGNED': 'Unassigned'

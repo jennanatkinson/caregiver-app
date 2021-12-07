@@ -1,15 +1,16 @@
 import 'package:caregiver_app/string_library.dart';
-import 'package:flutter/material.dart';
 import 'package:caregiver_app/theme.dart';
+import 'package:flutter/material.dart';
 
 class NavbarWidget extends StatefulWidget {
   NavbarWidget(
       {Key? key, required this.activePosition, required this.swapViewCallback})
       : super(key: key);
-  int activePosition;
+  final int activePosition;
   final Function swapViewCallback;
   final String _tasksButton = StringLibrary.getString('NAVBAR', 'TASKS_BUTTON');
-  final String _historyButton = StringLibrary.getString('NAVBAR', 'HISTORY_BUTTON');
+  final String _historyButton =
+      StringLibrary.getString('NAVBAR', 'HISTORY_BUTTON');
   final String _addButton = StringLibrary.getString('NAVBAR', 'ADD_BUTTON');
   final String _manageCareButton =
       StringLibrary.getString('NAVBAR', 'MANAGE_CARE_BUTTON');
@@ -43,7 +44,8 @@ class _NavbarWidgetState extends State<NavbarWidget> {
               icon: const Icon(Icons.history, size: _buttonSize),
               label: widget._historyButton),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.add_circle, size: _addButtonSize, color: onTertiaryColorMaterial),
+              icon: const Icon(Icons.add_circle,
+                  size: _addButtonSize, color: onTertiaryColorMaterial),
               label: widget._addButton),
           BottomNavigationBarItem(
               icon: const Icon(Icons.people, size: _buttonSize),
@@ -56,7 +58,6 @@ class _NavbarWidgetState extends State<NavbarWidget> {
 
   void onTabTapped(int index) {
     setState(() {
-      widget.activePosition = index;
       widget.swapViewCallback(index);
     });
   }

@@ -13,7 +13,7 @@ class EventAccessObject {
   final List<Event> eventData = List.generate(
       10,
       (int i) => generateRandomEvent('C_000000000000', 'Event $i',
-          [DetailAccessObject.getDetail('D_000000000000')]),
+          [DetailAccessObject().getDetail('D_000000000000')]),
       growable: true);
 
   List<Event> getEvents(

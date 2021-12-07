@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 class DetailDotWidget extends StatelessWidget {
@@ -9,8 +7,6 @@ class DetailDotWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var random = Random();
-
     return Container(
         margin: const EdgeInsets.fromLTRB(15, 5, 10, 5),
         // Sets the diameter of the circle

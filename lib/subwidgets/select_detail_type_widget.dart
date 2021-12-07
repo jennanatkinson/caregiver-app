@@ -1,12 +1,13 @@
 import 'package:caregiver_app/dao/detail_type_access_object.dart';
+import 'package:caregiver_app/subwidgets/selecting_detail_button.dart';
 import 'package:flutter/material.dart';
 
-import 'package:caregiver_app/subwidgets/detail_type_widget.dart';
-
 class SelectDetailTypeWidget extends StatefulWidget {
-  const SelectDetailTypeWidget({Key? key, required this.currentUser})
+  const SelectDetailTypeWidget(
+      {Key? key, required this.user, required this.callback})
       : super(key: key);
-  final String currentUser;
+  final String user;
+  final Function(String, String) callback;
 
   @override
   State<SelectDetailTypeWidget> createState() => _SelectDetailTypeWidgetState();
@@ -16,17 +17,18 @@ class _SelectDetailTypeWidgetState extends State<SelectDetailTypeWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: GridView(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2),
-            children: DetailTypeAccessObject.getUserTypes(widget.currentUser).map((detailType) {
-              return DetailTypeWidget(
-                  icon: const Icon(Icons.medication),
-                  name: detailType.name,
-                  callback: () {},
-                  color: detailType.color
-              );
-            }).toList()
-        ));
+        body: GridView.count(
+            crossAxisCount: 2,
+            children: DetailTypeAccessObject.getDetailTypes(widget.user)
+                .map((detailType) {
+              return Padding(
+                  padding: const EdgeInsets.all(50),
+                  child: SelectingDetailButton(
+                      icon: Icons.medication,
+                      name: detailType.name,
+                      color: detailType.color,
+                      callback: () =>
+                          {widget.callback(detailType.id, detailType.color)}));
+            }).toList()));
   }
 }

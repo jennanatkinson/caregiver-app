@@ -6,17 +6,16 @@ import 'package:flutter/material.dart';
 
 class HistoryWidget extends StatefulWidget {
   HistoryWidget(
-      {Key? key, required this.carePlanName, required this.patientInitials})
+      {Key? key,
+      required this.carePlanName,
+      required this.user,
+      required this.patientInitials})
       : super(key: key);
   final String carePlanName;
+  final String user;
   final String patientInitials;
-  String _currentUser = '';
   final String _firstTab = StringLibrary.getString('HISTORY', 'TIMELINE_TAB');
   final String _secondTab = StringLibrary.getString('HISTORY', 'CALENDAR_TAB');
-
-  set login(String userId) {
-    _currentUser = userId;
-  }
 
   @override
   State<HistoryWidget> createState() => _HistoryWidgetState();
@@ -48,14 +47,10 @@ class _HistoryWidgetState extends State<HistoryWidget> {
               child: TabBarView(children: [
                 // First tab (Recent)
                 EventListWidget(
-                    currentUser: widget._currentUser,
-                    allTasks: true,
-                    showHistory: true),
+                    user: widget.user, allTasks: true, showHistory: true),
                 // Second tab (Month)
                 EventListWidget(
-                    currentUser: widget._currentUser,
-                    allTasks: true,
-                    showHistory: true),
+                    user: widget.user, allTasks: true, showHistory: true),
               ]))),
     ));
   }

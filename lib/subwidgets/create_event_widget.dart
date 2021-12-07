@@ -1,33 +1,38 @@
+import 'package:caregiver_app/dao/detail_access_object.dart';
 import 'package:caregiver_app/dao/event_access_object.dart';
+import 'package:caregiver_app/data_objects/detail.dart';
 import 'package:caregiver_app/data_objects/event.dart';
 import 'package:caregiver_app/string_library.dart';
+import 'package:caregiver_app/subwidgets/add_detail_widget.dart';
 import 'package:caregiver_app/subwidgets/primary_custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CreateEventWidget extends StatefulWidget {
-  CreateEventWidget(
-      {Key? key, required this.carePlanId, required this.currentUser})
+  CreateEventWidget({Key? key, required this.carePlanId, required this.user})
       : super(key: key);
   final String carePlanId;
-  final String currentUser;
-
-  final EventAccessObject _eventAccessObject = EventAccessObject();
-
-  DateTime _selectedDate = DateTime.now();
-  String? _selectedUser;
+  final String user;
 
   // Date range for events
-  final int _dateRange = 100;
 
-  final EventAccessObject eventAccessObject = EventAccessObject();
+  final int _dateRange = 100;
+  final DetailAccessObject _detailAccessObject = DetailAccessObject();
+  final EventAccessObject _eventAccessObject = EventAccessObject();
 
   @override
   State<CreateEventWidget> createState() => _CreateEventWidgetState();
 }
 
 class _CreateEventWidgetState extends State<CreateEventWidget> {
+  final _key = GlobalKey<FormState>();
+
   final eventNameController = TextEditingController();
+  DateTime _selectedDate = DateTime.now();
+  String? _selectedUser;
+  final List<Detail> _details = List.empty(growable: true);
+
+  bool _selectingDetail = false;
 
   @override
   void dispose() {
@@ -37,7 +42,12 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final _key = GlobalKey<FormState>();
+    if (_selectingDetail) {
+      return AddDetailWidget(
+          user: widget.user,
+          cancelCallback: () => {_selectingDetail = false},
+          selectDetailCallback: _selectDetailCallback);
+    }
 
     var paddingBetweenItems = const Padding(padding: EdgeInsets.all(10));
 
@@ -57,8 +67,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
             const Text('Date'),
             ElevatedButton(
                 onPressed: () => _selectDate(context),
-                child:
-                    Text(DateFormat('MMM d, y').format(widget._selectedDate)))
+                child: Text(DateFormat('MMM d, y').format(_selectedDate)))
           ]),
           paddingBetweenItems,
           // Event Time
@@ -67,20 +76,28 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
             ElevatedButton(
                 onPressed: () => _selectTime(context),
                 // TODO: This seems bugged. The time doesn't appear to change, but the event shows changed time
-                child: Text(DateFormat('hh:mm').format(widget._selectedDate)))
+                child: Text(DateFormat('hh:mm').format(_selectedDate)))
           ]),
-          if (isFutureEvent()) paddingBetweenItems,
-          if (isFutureEvent())
+          if (_isFutureEvent()) paddingBetweenItems,
+          if (_isFutureEvent())
             Row(children: [
               // TODO: Decide on final string for here
               const Text('Assignee'),
               ElevatedButton(
                   onPressed: () => _selectAssignee(context),
-                  child: widget._selectedUser != null
-                      ? Text(widget._selectedUser as String)
+                  child: _selectedUser != null
+                      ? Text(_selectedUser as String)
                       : Text(
                           StringLibrary.getString('NEW_EVENT', 'UNASSIGNED')))
             ]),
+          paddingBetweenItems,
+          // Details list
+          Column(
+              children: _details.map((detail) => Text(detail.name)).toList()),
+          paddingBetweenItems,
+          PrimaryCustomButton(
+              onPressed: _beginSelectingDetail,
+              string: StringLibrary.getString('NEW_EVENT', 'ADD_DETAIL')),
           paddingBetweenItems,
           PrimaryCustomButton(
               onPressed: () =>
@@ -89,17 +106,24 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
         ]));
   }
 
+  _selectDetailCallback(String detailId) {
+    setState(() {
+      _details.add(widget._detailAccessObject.getDetail(detailId));
+      _selectingDetail = false;
+    });
+  }
+
   // Opens the date picker and stores the selected date
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: widget._selectedDate,
+        initialDate: _selectedDate,
         firstDate: DateTime(DateTime.now().year - widget._dateRange, 1, 1),
         lastDate: DateTime(DateTime.now().year + widget._dateRange, 12, 31));
-    if (picked != null && picked != widget._selectedDate) {
+    if (picked != null && picked != _selectedDate) {
       setState(() {
-        widget._selectedDate = DateTime(picked.year, picked.month, picked.day,
-            widget._selectedDate.hour, widget._selectedDate.minute, 0, 0);
+        _selectedDate = DateTime(picked.year, picked.month, picked.day,
+            _selectedDate.hour, _selectedDate.minute, 0, 0);
       });
     }
   }
@@ -107,18 +131,13 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
         context: context,
-        initialTime: TimeOfDay(
-            hour: widget._selectedDate.hour,
-            minute: widget._selectedDate.minute));
+        initialTime:
+            TimeOfDay(hour: _selectedDate.hour, minute: _selectedDate.minute));
     if (picked != null &&
-        (picked.hour != widget._selectedDate.hour ||
-            picked.minute != widget._selectedDate.minute)) {
-      widget._selectedDate = DateTime(
-          widget._selectedDate.year,
-          widget._selectedDate.month,
-          widget._selectedDate.day,
-          picked.hour,
-          picked.minute);
+        (picked.hour != _selectedDate.hour ||
+            picked.minute != _selectedDate.minute)) {
+      _selectedDate = DateTime(_selectedDate.year, _selectedDate.month,
+          _selectedDate.day, picked.hour, picked.minute);
     }
   }
 
@@ -130,13 +149,19 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
         widget.carePlanId,
         List.empty(),
         DateTime.now().millisecondsSinceEpoch,
-        isFutureEvent() ? widget._selectedDate.millisecondsSinceEpoch : null,
-        isFutureEvent() ? null : widget._selectedDate.millisecondsSinceEpoch,
+        _isFutureEvent() ? _selectedDate.millisecondsSinceEpoch : null,
+        _isFutureEvent() ? null : _selectedDate.millisecondsSinceEpoch,
         null,
-        widget._selectedUser));
+        _selectedUser));
   }
 
-  bool isFutureEvent() {
-    return widget._selectedDate.isAfter(DateTime.now());
+  bool _isFutureEvent() {
+    return _selectedDate.isAfter(DateTime.now());
+  }
+
+  _beginSelectingDetail() {
+    setState(() {
+      _selectingDetail = true;
+    });
   }
 }

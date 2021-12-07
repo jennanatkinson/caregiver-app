@@ -3,11 +3,10 @@ import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
 
 class AddWidget extends StatefulWidget {
-  const AddWidget(
-      {Key? key, required this.carePlanId, required this.currentUser})
+  const AddWidget({Key? key, required this.carePlanId, required this.user})
       : super(key: key);
   final String carePlanId;
-  final String currentUser;
+  final String user;
 
   @override
   State<AddWidget> createState() => _AddWidgetState();
@@ -20,7 +19,7 @@ class _AddWidgetState extends State<AddWidget> {
         drawer: const Drawer(),
         body: Padding(
             child: CreateEventWidget(
-                carePlanId: widget.carePlanId, currentUser: widget.currentUser),
+                carePlanId: widget.carePlanId, user: widget.user),
             padding: standardPadding));
   }
 }

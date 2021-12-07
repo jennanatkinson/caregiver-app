@@ -73,8 +73,11 @@ class _EventListItemWidgetState extends State<EventListItemWidget> {
 
   Color _getEventColor() {
     if (widget.event.details.isNotEmpty) {
-      return DetailTypeAccessObject.getTypeColor(
-          widget.event.details[0].typeId);
+      return Color(int.parse(
+              DetailTypeAccessObject.getTypeColor(
+                  widget.event.details[0].typeId),
+              radix: 16) +
+          0xFF000000);
     } else {
       return onSecondaryColorMaterial.shade200;
     }

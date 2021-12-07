@@ -9,11 +9,11 @@ class DetailAccessObject {
 
   DetailAccessObject._internal();
 
-  static final List<Detail> detailData = [
+  final List<Detail> detailData = [
     Detail('D_000000000000', 'Ibuprofen', 'T_000000000000')
   ];
 
-  static Detail getDetail(String id) {
+  Detail getDetail(String id) {
     for (int i = 0; i < detailData.length; i++) {
       if (detailData.elementAt(i).id == id) {
         return detailData.elementAt(i);
@@ -23,7 +23,7 @@ class DetailAccessObject {
     throw 'Detail not found';
   }
 
-  static bool detailExists(String id) {
+  bool detailExists(String id) {
     for (int i = 0; i < detailData.length; i++) {
       if (detailData.elementAt(i).id == id) {
         return true;
@@ -31,5 +31,15 @@ class DetailAccessObject {
     }
 
     return false;
+  }
+
+  List<Detail> getDetailsOfType(String detailTypeId) {
+    List<Detail> detailsOfType = List.empty(growable: true);
+    for (int i = 0; i < detailData.length; i++) {
+      if (detailData.elementAt(i).typeId == detailTypeId) {
+        detailsOfType.add(detailData.elementAt(i));
+      }
+    }
+    return detailsOfType;
   }
 }

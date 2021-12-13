@@ -162,7 +162,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
     widget._eventAccessObject.createEvent(Event.withoutId(
         eventNameController.text,
         widget.carePlanId,
-        List.empty(),
+        _details,
         DateTime.now().millisecondsSinceEpoch,
         _isFutureEvent() ? _selectedDate.millisecondsSinceEpoch : null,
         _isFutureEvent() ? null : _selectedDate.millisecondsSinceEpoch,

@@ -1,5 +1,6 @@
 import 'package:caregiver_app/add_widget.dart';
 import 'package:caregiver_app/events_widget.dart';
+import 'package:caregiver_app/manage_widget.dart';
 import 'package:caregiver_app/settings_widget.dart';
 import 'package:caregiver_app/string_library.dart';
 import 'package:caregiver_app/theme.dart';
@@ -28,6 +29,8 @@ class _CaregiverAppState extends State<CaregiverApp> {
   // Replacement defaults to disable the login screen.
   String _user = 'U_000000000000';
   String _carePlanId = 'C_000000000000';
+  String _carePlanName = StringLibrary.getString('MAIN', 'CARE_PLAN_NAME');
+  String _patientInitials = 'E';
 
   @override
   Widget build(BuildContext context) {
@@ -42,18 +45,21 @@ class _CaregiverAppState extends State<CaregiverApp> {
           // Currently active view
           body: [
             EventsWidget(
-              carePlanName: StringLibrary.getString('MAIN', 'CARE_PLAN_NAME'),
+              carePlanName: _carePlanName,
               user: _user,
-              patientInitials: 'E',
+              patientInitials: _patientInitials,
             ),
             HistoryWidget(
               carePlanName: StringLibrary.getString('MAIN', 'CARE_PLAN_NAME'),
               user: _user,
-              patientInitials: 'E',
+              patientInitials: _patientInitials,
             ),
             AddWidget(carePlanId: _carePlanId, user: _user),
             // Change to "Manage Care" widget
-            const Icon(Icons.people, size: 150),
+            ManageWidget(
+                carePlanName: _carePlanName,
+                user: _user,
+                patientInitials: _patientInitials),
             SettingsWidget(
                 carePlanId: _carePlanId,
                 user: _user,

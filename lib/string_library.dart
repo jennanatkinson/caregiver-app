@@ -30,7 +30,33 @@ class StringLibrary {
       'INCOMPLETE_TASKS_HEADER': 'Incomplete Tasks',
       'MY_TASKS_TAB': 'My Tasks'
     },
-    'HISTORY': {'TIMELINE_TAB': 'Timeline', 'CALENDAR_TAB': 'Calendar'}
+    'HISTORY': {'TIMELINE_TAB': 'Timeline', 'CALENDAR_TAB': 'Calendar'},
+    'MANAGE': {
+      'PERSONAL_INFO_HEADER': 'Personal Information',
+      'CHANGE_PICTURE': 'Change Picture',
+      'LEGAL_NAME': 'Full Legal Name',
+      'PREFERRED_NAME': 'Preferred Name',
+      'PRONOUNS': 'Pronouns',
+      'HOME_PHONE': 'Home Phone',
+      'CELL_PHONE': 'Cell Phone',
+      'RESIDENTIAL_ADDRESS': 'Residential Address',
+      'MEDICAL_INFO_HEADER': 'Medical Information',
+      'ALLERGIES': 'Allergies',
+      'DIAGNOSES': 'Diagnoses',
+      'MEDICATIONS': 'Medications + Frequency',
+      'EMERGENCY_INFO_HEADER': 'Emergency Information',
+      'EMERGENCY CONTACTS': 'Emergency Contacts',
+      'LOCAL_FIRST_RESPONDERS': 'Local First Responders',
+      'LOCAL_HOSPITAL': 'Local Hospital',
+      'LOCAL_POLICE': 'Local Police Dept (Non-emergency)',
+      'LOCAL_FIRE': 'Local Fire Dept (Non-emergency)',
+      'PRIMARY_CARE_PROVIDER_HEADER': 'Doctor\'s Name',
+      'PROVIDER_ADDRESS': 'Provider\'s Address',
+      'PROVIDER_PHONE': 'Provider\'s Phone Number',
+      'INSURANCE_CARD': 'Insurance Card',
+      'NOTES': 'Notes',
+      'ARCHIVE_PROFILE': 'Archive Profile'
+    }
   };
 
   static String getString(String category, String name) {

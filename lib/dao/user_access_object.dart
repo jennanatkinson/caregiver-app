@@ -14,4 +14,8 @@ class UserAccessObject {
     }
     return null;
   }
+
+  List<User> getUsersInCarePlan(String carePlanId) {
+    return _users.map((userInfo) => userInfo.user).toList();
+  }
 }

@@ -8,6 +8,7 @@ class NavbarWidget extends StatefulWidget {
       : super(key: key);
   final int activePosition;
   final Function swapViewCallback;
+
   final String _tasksButton = StringLibrary.getString('NAVBAR', 'TASKS_BUTTON');
   final String _historyButton =
       StringLibrary.getString('NAVBAR', 'HISTORY_BUTTON');

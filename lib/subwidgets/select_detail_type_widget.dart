@@ -7,7 +7,8 @@ class SelectDetailTypeWidget extends StatefulWidget {
       {Key? key, required this.user, required this.callback})
       : super(key: key);
   final String user;
-  final Function(String, String) callback;
+  final Function(String, String, int) callback;
+  final String fontFamily = 'MaterialIcons';
 
   @override
   State<SelectDetailTypeWidget> createState() => _SelectDetailTypeWidgetState();
@@ -24,11 +25,14 @@ class _SelectDetailTypeWidgetState extends State<SelectDetailTypeWidget> {
               return Padding(
                   padding: const EdgeInsets.all(50),
                   child: SelectingDetailButton(
-                      icon: Icons.medication,
+                      icon: IconData(detailType.iconId,
+                          fontFamily: widget.fontFamily),
                       name: detailType.name,
                       color: detailType.color,
-                      callback: () =>
-                          {widget.callback(detailType.id, detailType.color)}));
+                      callback: () => {
+                            widget.callback(detailType.id, detailType.color,
+                                detailType.iconId)
+                          }));
             }).toList()));
   }
 }

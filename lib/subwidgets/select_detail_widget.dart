@@ -7,12 +7,15 @@ class SelectDetailWidget extends StatefulWidget {
       {Key? key,
       required this.typeId,
       required this.color,
+      required this.iconId,
       required this.selectCallback})
       : super(key: key);
 
   final String typeId;
   final String color;
+  final int iconId;
   final Function(String) selectCallback;
+  final String fontFamily = 'MaterialIcons';
 
   final DetailAccessObject _detailAccessObject = DetailAccessObject();
 
@@ -31,7 +34,7 @@ class _SelectDetailWidgetState extends State<SelectDetailWidget> {
           return Padding(
               padding: const EdgeInsets.all(50),
               child: SelectingDetailButton(
-                  icon: Icons.medication,
+                  icon: IconData(widget.iconId, fontFamily: widget.fontFamily),
                   name: detail.name,
                   color: widget.color,
                   callback: () => {widget.selectCallback(detail.id)}));

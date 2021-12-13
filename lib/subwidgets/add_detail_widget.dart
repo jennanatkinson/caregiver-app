@@ -22,6 +22,7 @@ class AddDetailWidget extends StatefulWidget {
 class _AddDetailWidgetState extends State<AddDetailWidget> {
   String? _typeId;
   String? _color;
+  int? _iconId;
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +40,15 @@ class _AddDetailWidgetState extends State<AddDetailWidget> {
             : SelectDetailWidget(
                 typeId: _typeId as String,
                 color: _color as String,
+                iconId: _iconId as int,
                 selectCallback: widget.selectDetailCallback));
   }
 
-  _selectDetailTypeCallback(String typeId, String color) {
+  _selectDetailTypeCallback(String typeId, String color, int iconId) {
     setState(() {
       _typeId = typeId;
       _color = color;
+      _iconId = iconId;
     });
   }
 }

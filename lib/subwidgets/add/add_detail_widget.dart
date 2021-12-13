@@ -1,6 +1,6 @@
 import 'package:caregiver_app/string_library.dart';
-import 'package:caregiver_app/subwidgets/select_detail_type_widget.dart';
-import 'package:caregiver_app/subwidgets/select_detail_widget.dart';
+import 'package:caregiver_app/subwidgets/add/select_detail_type_widget.dart';
+import 'package:caregiver_app/subwidgets/add/select_detail_widget.dart';
 import 'package:flutter/material.dart';
 
 class AddDetailWidget extends StatefulWidget {

@@ -3,7 +3,7 @@ import 'package:caregiver_app/dao/event_access_object.dart';
 import 'package:caregiver_app/data_objects/detail.dart';
 import 'package:caregiver_app/data_objects/event.dart';
 import 'package:caregiver_app/string_library.dart';
-import 'package:caregiver_app/subwidgets/add_detail_widget.dart';
+import 'package:caregiver_app/subwidgets/add/add_detail_widget.dart';
 import 'package:caregiver_app/subwidgets/primary_custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -21,7 +21,7 @@ class CreateEventWidget extends StatefulWidget {
   final VoidCallback swapToEventListCallback;
   final VoidCallback swapToHistoryCallback;
 
-  // Date range for events
+  // Date range for manage
 
   final int _dateRange = 100;
   final DetailAccessObject _detailAccessObject = DetailAccessObject();
@@ -84,7 +84,6 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
             const Text('Time'),
             ElevatedButton(
                 onPressed: () => _selectTime(context),
-                // TODO: This seems bugged. The time doesn't appear to change, but the event shows changed time
                 child: Text(DateFormat('hh:mm').format(_selectedDate)))
           ]),
           if (_isFutureEvent()) paddingBetweenItems,
@@ -141,6 +140,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
     }
   }
 
+  // Opens the time picker and stores the selected time
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
         context: context,

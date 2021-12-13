@@ -1,11 +1,11 @@
 import 'package:caregiver_app/main_app_bar.dart';
 import 'package:caregiver_app/string_library.dart';
-import 'package:caregiver_app/subwidgets/event_list_widget.dart';
+import 'package:caregiver_app/subwidgets/events/event_list_widget.dart';
 import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
 
-class EventsWidget extends StatefulWidget {
-  EventsWidget(
+class TasksWidget extends StatefulWidget {
+  TasksWidget(
       {Key? key,
       required this.carePlanName,
       required this.user,
@@ -18,10 +18,10 @@ class EventsWidget extends StatefulWidget {
   final String _secondTab = StringLibrary.getString('TASKS', 'ALL_TASKS_TAB');
 
   @override
-  State<EventsWidget> createState() => _EventsWidgetState();
+  State<TasksWidget> createState() => _TasksWidgetState();
 }
 
-class _EventsWidgetState extends State<EventsWidget> {
+class _TasksWidgetState extends State<TasksWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

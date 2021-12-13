@@ -1,6 +1,6 @@
 import 'package:caregiver_app/main_app_bar.dart';
 import 'package:caregiver_app/string_library.dart';
-import 'package:caregiver_app/subwidgets/event_list_widget.dart';
+import 'package:caregiver_app/subwidgets/events/event_list_widget.dart';
 import 'package:flutter/material.dart';
 
 class HistoryWidget extends StatefulWidget {

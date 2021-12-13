@@ -1,4 +1,4 @@
-import 'package:caregiver_app/subwidgets/login_form_widget.dart';
+import 'package:caregiver_app/subwidgets/login/login_form_widget.dart';
 import 'package:flutter/material.dart';
 
 class LoginWidget extends StatefulWidget {

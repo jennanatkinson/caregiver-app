@@ -1,8 +1,8 @@
 import 'package:caregiver_app/add_widget.dart';
-import 'package:caregiver_app/events_widget.dart';
 import 'package:caregiver_app/manage_widget.dart';
 import 'package:caregiver_app/settings_widget.dart';
 import 'package:caregiver_app/string_library.dart';
+import 'package:caregiver_app/tasks_widget.dart';
 import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +44,7 @@ class _CaregiverAppState extends State<CaregiverApp> {
         home: Scaffold(
           // Currently active view
           body: [
-            EventsWidget(
+            TasksWidget(
               carePlanName: _carePlanName,
               user: _user,
               patientInitials: _patientInitials,

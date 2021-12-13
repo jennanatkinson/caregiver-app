@@ -37,7 +37,7 @@ class _CaregiverAppState extends State<CaregiverApp> {
     if (_user == '') {
       return MaterialApp(
           title: widget._appTitle,
-          home: LoginWidget(loginCallback: loginCallback));
+          home: LoginWidget(loginCallback: _loginCallback));
     }
     return MaterialApp(
         title: widget._appTitle,
@@ -54,7 +54,11 @@ class _CaregiverAppState extends State<CaregiverApp> {
               user: _user,
               patientInitials: _patientInitials,
             ),
-            AddWidget(carePlanId: _carePlanId, user: _user),
+            AddWidget(
+                carePlanId: _carePlanId,
+                user: _user,
+                swapToEventListCallback: _swapToEventListCallback,
+                swapToHistoryCallback: _swapToHistoryCallback),
             // Change to "Manage Care" widget
             ManageWidget(
                 carePlanName: _carePlanName,
@@ -63,32 +67,45 @@ class _CaregiverAppState extends State<CaregiverApp> {
             SettingsWidget(
                 carePlanId: _carePlanId,
                 user: _user,
-                logoutCallback: logoutCallback),
+                logoutCallback: _logoutCallback),
           ].elementAt(_activeView),
           // Tabs to swap between the main views
           bottomNavigationBar: NavbarWidget(
             activePosition: _activeView,
-            swapViewCallback: swapViewCallback,
+            swapViewCallback: _swapViewCallback,
           ),
         ),
         theme: mainThemeData);
   }
 
   // Updates the currently active view. Called by the bottom navigation bar
-  void swapViewCallback(int index) {
+  void _swapViewCallback(int index) {
     setState(() {
       _activeView = index;
     });
   }
 
-  void loginCallback(String userId) {
+  void _swapToEventListCallback() {
     setState(() {
+      _activeView = 0;
+    });
+  }
+
+  void _swapToHistoryCallback() {
+    setState(() {
+      _activeView = 1;
+    });
+  }
+
+  void _loginCallback(String userId) {
+    setState(() {
+      _activeView = 0;
       _user = userId;
       _carePlanId = 'C_000000000000';
     });
   }
 
-  void logoutCallback() {
+  void _logoutCallback() {
     setState(() {
       _user = '';
       _carePlanId = '';

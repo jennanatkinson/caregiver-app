@@ -9,10 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CreateEventWidget extends StatefulWidget {
-  CreateEventWidget({Key? key, required this.carePlanId, required this.user})
+  CreateEventWidget(
+      {Key? key,
+      required this.carePlanId,
+      required this.user,
+      required this.swapToEventListCallback,
+      required this.swapToHistoryCallback})
       : super(key: key);
   final String carePlanId;
   final String user;
+  final VoidCallback swapToEventListCallback;
+  final VoidCallback swapToHistoryCallback;
 
   // Date range for events
 
@@ -45,7 +52,9 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
     if (_selectingDetail) {
       return AddDetailWidget(
           user: widget.user,
-          cancelCallback: () => {_selectingDetail = false},
+          cancelCallback: () {
+            setState(() => {_selectingDetail = false});
+          },
           selectDetailCallback: _selectDetailCallback);
     }
 
@@ -100,8 +109,12 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
               string: StringLibrary.getString('NEW_EVENT', 'ADD_DETAIL')),
           paddingBetweenItems,
           PrimaryCustomButton(
-              onPressed: () =>
-                  _submitEvent(context), //TODO: Navigate back to tasks
+              onPressed: () => {
+                    _submitEvent(context),
+                    (_isFutureEvent())
+                        ? widget.swapToEventListCallback()
+                        : widget.swapToHistoryCallback()
+                  },
               string: StringLibrary.getString('NEW_EVENT', 'SUBMIT'))
         ]));
   }
@@ -136,8 +149,10 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
     if (picked != null &&
         (picked.hour != _selectedDate.hour ||
             picked.minute != _selectedDate.minute)) {
-      _selectedDate = DateTime(_selectedDate.year, _selectedDate.month,
-          _selectedDate.day, picked.hour, picked.minute);
+      setState(() {
+        _selectedDate = DateTime(_selectedDate.year, _selectedDate.month,
+            _selectedDate.day, picked.hour, picked.minute);
+      });
     }
   }
 
@@ -152,7 +167,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
         _isFutureEvent() ? _selectedDate.millisecondsSinceEpoch : null,
         _isFutureEvent() ? null : _selectedDate.millisecondsSinceEpoch,
         null,
-        _selectedUser));
+        (_selectedUser == null) ? widget.user : _selectedUser));
   }
 
   bool _isFutureEvent() {

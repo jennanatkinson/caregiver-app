@@ -1,7 +1,6 @@
 import 'package:caregiver_app/main_app_bar.dart';
 import 'package:caregiver_app/string_library.dart';
 import 'package:caregiver_app/subwidgets/event_list_widget.dart';
-import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
 
 class HistoryWidget extends StatefulWidget {
@@ -42,16 +41,14 @@ class _HistoryWidgetState extends State<HistoryWidget> {
             ];
           },
           // Lists dependent on which tab is selected
-          body: Padding(
-              padding: noPadding,
-              child: TabBarView(children: [
-                // First tab (Recent)
-                EventListWidget(
-                    user: widget.user, allTasks: true, showHistory: true),
-                // Second tab (Month)
-                EventListWidget(
-                    user: widget.user, allTasks: true, showHistory: true),
-              ]))),
+          body: TabBarView(children: [
+            // First tab (Recent)
+            EventListWidget(
+                user: widget.user, allTasks: true, showHistory: true),
+            // Second tab (Month)
+            EventListWidget(
+                user: widget.user, allTasks: true, showHistory: true),
+          ])),
     ));
   }
 }

@@ -1,5 +1,5 @@
 import 'package:caregiver_app/dao/detail_type_access_object.dart';
-import 'package:caregiver_app/subwidgets/selecting_detail_button.dart';
+import 'package:caregiver_app/subwidgets/add/selecting_detail_button.dart';
 import 'package:flutter/material.dart';
 
 class SelectDetailTypeWidget extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:caregiver_app/dao/event_access_object.dart';
 import 'package:caregiver_app/data_objects/event.dart';
-import 'package:caregiver_app/subwidgets/event_list_item_widget.dart';
+import 'package:caregiver_app/subwidgets/events/event_list_item_widget.dart';
 import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

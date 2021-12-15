@@ -6,6 +6,7 @@ import 'package:caregiver_app/tasks_widget.dart';
 import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
 
+import 'data_objects/user.dart';
 import 'history_widget.dart';
 import 'login_widget.dart';
 import 'subwidgets/navbar_widget.dart';
@@ -24,17 +25,14 @@ class _CaregiverAppState extends State<CaregiverApp> {
   // Currently active view. Defaults to "Tasks"
   int _activeView = 0;
   // The user currently logged in. Null if a user isn't logged in.
-  // String _user = '';
-  // String _carePlanId = '';
-  // Replacement defaults to disable the login screen.
-  String _user = 'U_000000000000';
+  User? _user;
   String _carePlanId = 'C_000000000000';
   String _carePlanName = StringLibrary.getString('MAIN', 'CARE_PLAN_NAME');
   String _patientInitials = 'E';
 
   @override
   Widget build(BuildContext context) {
-    if (_user == '') {
+    if (_user == null) {
       return MaterialApp(
           title: widget._appTitle,
           home: LoginWidget(loginCallback: _loginCallback));
@@ -46,27 +44,27 @@ class _CaregiverAppState extends State<CaregiverApp> {
           body: [
             TasksWidget(
               carePlanName: _carePlanName,
-              user: _user,
+              userId: (_user as User).userId,
               patientInitials: _patientInitials,
             ),
             HistoryWidget(
               carePlanName: StringLibrary.getString('MAIN', 'CARE_PLAN_NAME'),
-              user: _user,
+              userId: (_user as User).userId,
               patientInitials: _patientInitials,
             ),
             AddWidget(
                 carePlanId: _carePlanId,
-                user: _user,
+                user: (_user as User),
                 swapToEventListCallback: _swapToEventListCallback,
                 swapToHistoryCallback: _swapToHistoryCallback),
             // Change to "Manage Care" widget
             ManageWidget(
                 carePlanName: _carePlanName,
-                user: _user,
+                userId: (_user as User).userId,
                 patientInitials: _patientInitials),
             SettingsWidget(
                 carePlanId: _carePlanId,
-                user: _user,
+                user: (_user as User),
                 logoutCallback: _logoutCallback),
           ].elementAt(_activeView),
           // Tabs to swap between the main views
@@ -97,17 +95,17 @@ class _CaregiverAppState extends State<CaregiverApp> {
     });
   }
 
-  void _loginCallback(String userId) {
+  void _loginCallback(User user) {
     setState(() {
       _activeView = 0;
-      _user = userId;
+      _user = user;
       _carePlanId = 'C_000000000000';
     });
   }
 
   void _logoutCallback() {
     setState(() {
-      _user = '';
+      _user = null;
       _carePlanId = '';
     });
   }

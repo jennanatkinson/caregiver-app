@@ -8,11 +8,11 @@ import 'package:intl/intl.dart';
 class EventListWidget extends StatefulWidget {
   EventListWidget(
       {Key? key,
-      required this.user,
+      required this.userId,
       required this.allTasks,
       required this.showHistory})
       : super(key: key);
-  final String user;
+  final String userId;
   final bool allTasks;
   final bool showHistory;
 
@@ -38,9 +38,9 @@ class _EventListWidgetState extends State<EventListWidget> {
   void _generateListItems() {
     _listItems = <Widget>[];
     List<Event> incompleteEvents = widget._eventAccessObject.getEvents(null,
-        null, null, null, false, null, widget.allTasks ? null : widget.user);
+        null, null, null, false, null, widget.allTasks ? null : widget.userId);
     List<Event> completeEvents = widget._eventAccessObject.getEvents(null, null,
-        null, null, true, null, widget.allTasks ? null : widget.user);
+        null, null, true, null, widget.allTasks ? null : widget.userId);
 
     if (!widget.showHistory) {
       for (int i = 0; i < incompleteEvents.length; i++) {

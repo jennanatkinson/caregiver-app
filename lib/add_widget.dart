@@ -2,6 +2,8 @@ import 'package:caregiver_app/subwidgets/add/create_event_widget.dart';
 import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
 
+import 'data_objects/user.dart';
+
 class AddWidget extends StatefulWidget {
   const AddWidget(
       {Key? key,
@@ -11,7 +13,7 @@ class AddWidget extends StatefulWidget {
       required this.swapToHistoryCallback})
       : super(key: key);
   final String carePlanId;
-  final String user;
+  final User user;
   final VoidCallback swapToEventListCallback;
   final VoidCallback swapToHistoryCallback;
 

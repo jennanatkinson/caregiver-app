@@ -7,11 +7,11 @@ class ManageWidget extends StatefulWidget {
   const ManageWidget(
       {Key? key,
       required this.carePlanName,
-      required this.user,
+      required this.userId,
       required this.patientInitials})
       : super(key: key);
   final String carePlanName;
-  final String user;
+  final String userId;
   final String patientInitials;
 
   @override

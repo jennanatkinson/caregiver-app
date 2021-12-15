@@ -7,11 +7,11 @@ class HistoryWidget extends StatefulWidget {
   HistoryWidget(
       {Key? key,
       required this.carePlanName,
-      required this.user,
+      required this.userId,
       required this.patientInitials})
       : super(key: key);
   final String carePlanName;
-  final String user;
+  final String userId;
   final String patientInitials;
   final String _firstTab = StringLibrary.getString('HISTORY', 'TIMELINE_TAB');
 
@@ -42,7 +42,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
           body: TabBarView(children: [
             // First tab (History)
             EventListWidget(
-                user: widget.user, allTasks: true, showHistory: true),
+                userId: widget.userId, allTasks: true, showHistory: true),
           ])),
     ));
   }

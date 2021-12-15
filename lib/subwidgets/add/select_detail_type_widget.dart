@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class SelectDetailTypeWidget extends StatefulWidget {
   const SelectDetailTypeWidget(
-      {Key? key, required this.user, required this.callback})
+      {Key? key, required this.userId, required this.callback})
       : super(key: key);
-  final String user;
+  final String userId;
   final Function(String, String, int) callback;
   final String fontFamily = 'MaterialIcons';
 
@@ -22,7 +22,7 @@ class _SelectDetailTypeWidgetState extends State<SelectDetailTypeWidget> {
             padding: EdgeInsets.only(left: 20, right: 20, top: 50),
             child: GridView.count(
                 crossAxisCount: 2,
-                children: DetailTypeAccessObject.getDetailTypes(widget.user)
+                children: DetailTypeAccessObject.getDetailTypes(widget.userId)
                     .map((detailType) {
                   return SelectingDetailButton(
                       icon: IconData(detailType.iconId,

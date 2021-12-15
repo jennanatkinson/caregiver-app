@@ -1,3 +1,4 @@
+import 'package:caregiver_app/data_objects/user.dart';
 import 'package:caregiver_app/string_library.dart';
 import 'package:caregiver_app/subwidgets/buttons/primary_custom_button.dart';
 import 'package:caregiver_app/theme.dart';
@@ -11,7 +12,7 @@ class SettingsWidget extends StatefulWidget {
       required this.logoutCallback})
       : super(key: key);
   final String carePlanId;
-  final String user;
+  final User user;
   final VoidCallback logoutCallback;
 
   @override

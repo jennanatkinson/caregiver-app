@@ -3,15 +3,16 @@ import 'package:caregiver_app/dao/detail_type_access_object.dart';
 import 'package:caregiver_app/dao/event_access_object.dart';
 import 'package:caregiver_app/data_objects/detail.dart';
 import 'package:caregiver_app/data_objects/event.dart';
+import 'package:caregiver_app/data_objects/user.dart';
 import 'package:caregiver_app/string_library.dart';
 import 'package:caregiver_app/subwidgets/add/add_detail_widget.dart';
+import 'package:caregiver_app/subwidgets/add/assignee_selector.dart';
 import 'package:caregiver_app/subwidgets/buttons/added_detail_custom_button.dart';
 import 'package:caregiver_app/subwidgets/buttons/primary_custom_button.dart';
 import 'package:caregiver_app/subwidgets/buttons/secondary_custom_button.dart';
+import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import '../../theme.dart';
 
 class CreateEventWidget extends StatefulWidget {
   CreateEventWidget(
@@ -22,7 +23,7 @@ class CreateEventWidget extends StatefulWidget {
       required this.swapToHistoryCallback})
       : super(key: key);
   final String carePlanId;
-  final String user;
+  final User user;
   final VoidCallback swapToEventListCallback;
   final VoidCallback swapToHistoryCallback;
 
@@ -41,10 +42,12 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
 
   final eventNameController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
-  String? _selectedUser;
+  User? _assignedUser;
   final List<Detail> _details = List.empty(growable: true);
 
   bool _selectingDetail = false;
+
+  final double _itemSpacing = 5;
 
   @override
   void dispose() {
@@ -56,7 +59,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
   Widget build(BuildContext context) {
     if (_selectingDetail) {
       return AddDetailWidget(
-          user: widget.user,
+          userId: widget.user.userId,
           cancelCallback: () {
             setState(() => {_selectingDetail = false});
           },
@@ -71,7 +74,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
         child: Form(
             key: _key,
             child: Column(children: [
-              SizedBox(height: 200),
+              SizedBox(height: 150),
               // Event Name
               TextFormField(
                   controller: eventNameController,
@@ -85,32 +88,33 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                 // Event Date
                 Row(children: [
                   Text(StringLibrary.getString('NEW_EVENT', 'DATE')),
-                  SizedBox(width: 5),
+                  SizedBox(width: _itemSpacing),
                   ElevatedButton(
                       onPressed: () => _selectDate(context),
                       child: Text(DateFormat('MMM d, y').format(_selectedDate)),
-                      style: _getDateTimeButtonStyle())
+                      style: _getDateTimeAssignButtonStyle())
                 ]),
                 SizedBox(width: 25),
                 // Event Time
                 Row(children: [
                   Text(StringLibrary.getString('NEW_EVENT', 'TIME')),
-                  SizedBox(width: 5),
+                  SizedBox(width: _itemSpacing),
                   ElevatedButton(
                       onPressed: () => _selectTime(context),
                       child: Text(DateFormat('hh:mm').format(_selectedDate)),
-                      style: _getDateTimeButtonStyle())
+                      style: _getDateTimeAssignButtonStyle())
                 ])
               ]),
               if (_isFutureEvent()) paddingBetweenItems,
               if (_isFutureEvent())
                 Row(children: [
-                  // TODO: Decide on final string for here
-                  const Text('Assignee'),
+                  Text(StringLibrary.getString('NEW_EVENT', 'ASSIGNED_PERSON')),
+                  SizedBox(width: _itemSpacing),
                   ElevatedButton(
                       onPressed: () => _selectAssignee(context),
-                      child: _selectedUser != null
-                          ? Text(_selectedUser as String)
+                      style: _getDateTimeAssignButtonStyle(),
+                      child: _assignedUser != null
+                          ? Text((_assignedUser as User).username)
                           : Text(StringLibrary.getString(
                               'NEW_EVENT', 'UNASSIGNED')))
                 ]),
@@ -122,9 +126,12 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                       .toList()),
               paddingBetweenItems,
               SecondaryCustomButton(
-                  onPressed: _beginSelectingDetail,
+                  onPressed: () {
+                    setState(() => {_selectingDetail = true});
+                  },
                   string: '+ ' +
                       StringLibrary.getString('NEW_EVENT', 'ADD_DETAIL')),
+              paddingBetweenItems,
               Expanded(
                   //This makes the Submit button stay at the bottom
                   child: new Align(
@@ -152,7 +159,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                 }));
   }
 
-  ButtonStyle _getDateTimeButtonStyle() {
+  ButtonStyle _getDateTimeAssignButtonStyle() {
     return ElevatedButton.styleFrom(
         primary: onPrimaryColorMaterial.shade100,
         onPrimary: Colors.black,
@@ -199,27 +206,45 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
     }
   }
 
-  Future<void> _selectAssignee(BuildContext context) async {}
-
-  _submitEvent(BuildContext context) {
-    widget._eventAccessObject.createEvent(Event.withoutId(
-        eventNameController.text,
-        widget.carePlanId,
-        List.empty(),
-        DateTime.now().millisecondsSinceEpoch,
-        _isFutureEvent() ? _selectedDate.millisecondsSinceEpoch : null,
-        _isFutureEvent() ? null : _selectedDate.millisecondsSinceEpoch,
-        null,
-        (_selectedUser == null) ? widget.user : _selectedUser));
+  // Opens a modal to select a user to assign the task to
+  Future<void> _selectAssignee(BuildContext context) async {
+    final User? picked = await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AssigneeSelector(
+              carePlanId: widget.carePlanId,
+              selectAssigneeCallback: (User user) {});
+        });
+    if (picked != _assignedUser) {
+      setState(() {
+        _assignedUser = picked;
+      });
+    }
   }
 
+  // Saves the event to the database and then closes the Add page
+  _submitEvent(BuildContext context) {
+    if (_key.currentState!.validate()) {
+      widget._eventAccessObject.createEvent(Event.withoutId(
+          eventNameController.text,
+          widget.carePlanId,
+          _details,
+          DateTime.now().millisecondsSinceEpoch,
+          _isFutureEvent() ? _selectedDate.millisecondsSinceEpoch : null,
+          _isFutureEvent() ? null : _selectedDate.millisecondsSinceEpoch,
+          null,
+          (_assignedUser as User).userId));
+      (_isFutureEvent())
+          ? widget.swapToEventListCallback()
+          : widget.swapToHistoryCallback();
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Missing required fields')));
+    }
+  }
+
+  // Checks if the event is in the future
   bool _isFutureEvent() {
     return _selectedDate.isAfter(DateTime.now());
-  }
-
-  _beginSelectingDetail() {
-    setState(() {
-      _selectingDetail = true;
-    });
   }
 }

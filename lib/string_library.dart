@@ -24,6 +24,7 @@ class StringLibrary {
       'SELECT_DETAIL_TYPE': 'Select Detail Type',
       'EVENT_NAME': 'Event Name',
       'SUBMIT': 'Submit',
+      'ASSIGNED_PERSON': 'Assigned Person:',
       'UNASSIGNED': 'Unassigned'
     },
     'TASKS': {

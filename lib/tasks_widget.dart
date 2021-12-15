@@ -8,11 +8,11 @@ class TasksWidget extends StatefulWidget {
   TasksWidget(
       {Key? key,
       required this.carePlanName,
-      required this.user,
+      required this.userId,
       required this.patientInitials})
       : super(key: key);
   final String carePlanName;
-  final String user;
+  final String userId;
   final String patientInitials;
   final String _firstTab = StringLibrary.getString('TASKS', 'MY_TASKS_TAB');
   final String _secondTab = StringLibrary.getString('TASKS', 'ALL_TASKS_TAB');
@@ -47,13 +47,13 @@ class _TasksWidgetState extends State<TasksWidget> {
               child: TabBarView(children: [
                 // First tab (My Tasks)
                 EventListWidget(
-                  user: widget.user,
+                  userId: widget.userId,
                   allTasks: false,
                   showHistory: false,
                 ),
                 // Second tab (All Tasks)
                 EventListWidget(
-                    user: widget.user, allTasks: true, showHistory: false)
+                    userId: widget.userId, allTasks: true, showHistory: false)
               ]))),
     ));
   }

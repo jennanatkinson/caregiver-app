@@ -14,7 +14,6 @@ class HistoryWidget extends StatefulWidget {
   final String user;
   final String patientInitials;
   final String _firstTab = StringLibrary.getString('HISTORY', 'TIMELINE_TAB');
-  final String _secondTab = StringLibrary.getString('HISTORY', 'CALENDAR_TAB');
 
   @override
   State<HistoryWidget> createState() => _HistoryWidgetState();
@@ -27,7 +26,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
         // Necessary for tabs to work
         body: DefaultTabController(
       // Number of tabs
-      length: 2,
+      length: 1,
       // Necessary for scrolling
       child: NestedScrollView(
           // Header pulled from main_app_bar.dart
@@ -36,16 +35,12 @@ class _HistoryWidgetState extends State<HistoryWidget> {
               MainAppBar(
                   carePlanName: widget.carePlanName,
                   patientInitials: widget.patientInitials,
-                  firstTab: widget._firstTab,
-                  secondTab: widget._secondTab)
+                  firstTab: widget._firstTab)
             ];
           },
           // Lists dependent on which tab is selected
           body: TabBarView(children: [
-            // First tab (Recent)
-            EventListWidget(
-                user: widget.user, allTasks: true, showHistory: true),
-            // Second tab (Month)
+            // First tab (History)
             EventListWidget(
                 user: widget.user, allTasks: true, showHistory: true),
           ])),

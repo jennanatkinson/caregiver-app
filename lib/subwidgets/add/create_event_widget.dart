@@ -2,6 +2,7 @@ import 'package:caregiver_app/dao/detail_access_object.dart';
 import 'package:caregiver_app/dao/event_access_object.dart';
 import 'package:caregiver_app/data_objects/detail.dart';
 import 'package:caregiver_app/data_objects/event.dart';
+import 'package:caregiver_app/data_objects/user.dart';
 import 'package:caregiver_app/string_library.dart';
 import 'package:caregiver_app/subwidgets/add/add_detail_widget.dart';
 import 'package:caregiver_app/subwidgets/add/assignee_selector.dart';
@@ -18,7 +19,7 @@ class CreateEventWidget extends StatefulWidget {
       required this.swapToHistoryCallback})
       : super(key: key);
   final String carePlanId;
-  final String user;
+  final User user;
   final VoidCallback swapToEventListCallback;
   final VoidCallback swapToHistoryCallback;
 
@@ -52,7 +53,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
   Widget build(BuildContext context) {
     if (_selectingDetail) {
       return AddDetailWidget(
-          user: widget.user,
+          userId: widget.user.userId,
           cancelCallback: () {
             setState(() => {_selectingDetail = false});
           },

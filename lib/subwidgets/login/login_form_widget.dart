@@ -1,4 +1,5 @@
 import 'package:caregiver_app/dao/user_access_object.dart';
+import 'package:caregiver_app/data_objects/user.dart';
 import 'package:caregiver_app/string_library.dart';
 import 'package:flutter/material.dart';
 
@@ -62,10 +63,10 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         ElevatedButton(
             onPressed: () {
               if (_key.currentState!.validate()) {
-                String? userId = widget._userAccessObject.verifyUser(
+                User? user = widget._userAccessObject.verifyUser(
                     usernameController.text, passwordController.text);
-                if (userId != null) {
-                  widget.loginCallback(userId);
+                if (user != null) {
+                  widget.loginCallback(user);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(

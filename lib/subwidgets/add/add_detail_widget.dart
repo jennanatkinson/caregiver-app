@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 class AddDetailWidget extends StatefulWidget {
   const AddDetailWidget(
       {Key? key,
-      required this.user,
+      required this.userId,
       required this.cancelCallback,
       required this.selectDetailCallback})
       : super(key: key);
 
-  final String user;
+  final String userId;
   final VoidCallback cancelCallback;
   final Function(String) selectDetailCallback;
 
@@ -36,7 +36,7 @@ class _AddDetailWidgetState extends State<AddDetailWidget> {
             )),
         body: (_typeId == null)
             ? SelectDetailTypeWidget(
-                user: widget.user, callback: _selectDetailTypeCallback)
+                userId: widget.userId, callback: _selectDetailTypeCallback)
             : SelectDetailWidget(
                 typeId: _typeId as String,
                 color: _color as String,

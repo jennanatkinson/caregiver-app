@@ -1,5 +1,6 @@
 import 'package:caregiver_app/dao/user_access_object.dart';
 import 'package:caregiver_app/string_library.dart';
+import 'package:caregiver_app/subwidgets/buttons/primary_custom_button.dart';
 import 'package:flutter/material.dart';
 
 class LoginFormWidget extends StatefulWidget {
@@ -59,7 +60,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         // Padding between password text box and login button
         const SizedBox(height: 10),
         // Login button
-        ElevatedButton(
+        PrimaryCustomButton(
             onPressed: () {
               if (_key.currentState!.validate()) {
                 String? userId = widget._userAccessObject.verifyUser(
@@ -73,7 +74,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                 }
               }
             },
-            child: Text(StringLibrary.getString('LOGIN', 'LOGIN_BUTTON')))
+            string: StringLibrary.getString('LOGIN', 'LOGIN_BUTTON'))
       ]),
     );
   }

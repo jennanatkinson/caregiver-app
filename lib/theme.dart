@@ -81,5 +81,17 @@ const noPadding = EdgeInsets.all(0);
 
 const double smallTextSize = 12;
 const double mediumSmallTextSize = 15;
+const double mediumMidSmallTextSize = 18;
 const double mediumTextSize = 20;
 const double mediumLargeTextSize = 25;
+
+const int _buttonColorBase = 16;
+const int _buttonColorAlpha = 0xFF000000;
+
+Color getItemColor(String colorId) {
+  return Color(int.parse(colorId, radix: _buttonColorBase) + _buttonColorAlpha);
+}
+
+Color getItemOpacityColor(String colorId) {
+  return getItemColor(colorId).withOpacity(.2);
+}

@@ -1,12 +1,17 @@
 import 'package:caregiver_app/dao/detail_access_object.dart';
+import 'package:caregiver_app/dao/detail_type_access_object.dart';
 import 'package:caregiver_app/dao/event_access_object.dart';
 import 'package:caregiver_app/data_objects/detail.dart';
 import 'package:caregiver_app/data_objects/event.dart';
 import 'package:caregiver_app/string_library.dart';
 import 'package:caregiver_app/subwidgets/add/add_detail_widget.dart';
-import 'package:caregiver_app/subwidgets/primary_custom_button.dart';
+import 'package:caregiver_app/subwidgets/buttons/added_detail_custom_button.dart';
+import 'package:caregiver_app/subwidgets/buttons/primary_custom_button.dart';
+import 'package:caregiver_app/subwidgets/buttons/secondary_custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import '../../theme.dart';
 
 class CreateEventWidget extends StatefulWidget {
   CreateEventWidget(
@@ -58,69 +63,107 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
           selectDetailCallback: _selectDetailCallback);
     }
 
-    var paddingBetweenItems = const Padding(padding: EdgeInsets.all(10));
+    var paddingBetweenItems =
+        const Padding(padding: EdgeInsets.only(top: 10, bottom: 10));
 
-    return Form(
-        key: _key,
-        child: Column(children: [
-          // Event Name
-          TextFormField(
-              controller: eventNameController,
-              decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  hintText:
-                      StringLibrary.getString('NEW_EVENT', 'EVENT_NAME'))),
-          paddingBetweenItems,
-          // Event Date
-          Row(children: [
-            const Text('Date'),
-            ElevatedButton(
-                onPressed: () => _selectDate(context),
-                child: Text(DateFormat('MMM d, y').format(_selectedDate)))
-          ]),
-          paddingBetweenItems,
-          // Event Time
-          Row(children: [
-            const Text('Time'),
-            ElevatedButton(
-                onPressed: () => _selectTime(context),
-                child: Text(DateFormat('hh:mm').format(_selectedDate)))
-          ]),
-          if (_isFutureEvent()) paddingBetweenItems,
-          if (_isFutureEvent())
-            Row(children: [
-              // TODO: Decide on final string for here
-              const Text('Assignee'),
-              ElevatedButton(
-                  onPressed: () => _selectAssignee(context),
-                  child: _selectedUser != null
-                      ? Text(_selectedUser as String)
-                      : Text(
-                          StringLibrary.getString('NEW_EVENT', 'UNASSIGNED')))
-            ]),
-          paddingBetweenItems,
-          // Details list
-          Column(
-              children: _details.map((detail) => Text(detail.name)).toList()),
-          paddingBetweenItems,
-          PrimaryCustomButton(
-              onPressed: _beginSelectingDetail,
-              string: StringLibrary.getString('NEW_EVENT', 'ADD_DETAIL')),
-          paddingBetweenItems,
-          PrimaryCustomButton(
-              onPressed: () => {
-                    _submitEvent(context),
-                    (_isFutureEvent())
-                        ? widget.swapToEventListCallback()
-                        : widget.swapToHistoryCallback()
-                  },
-              string: StringLibrary.getString('NEW_EVENT', 'SUBMIT'))
-        ]));
+    return Padding(
+        padding: standardPadding,
+        child: Form(
+            key: _key,
+            child: Column(children: [
+              SizedBox(height: 200),
+              // Event Name
+              TextFormField(
+                  controller: eventNameController,
+                  decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      hintText:
+                          StringLibrary.getString('NEW_EVENT', 'EVENT_NAME'))),
+              paddingBetweenItems,
+              Row(children: [
+                SizedBox(width: 10),
+                // Event Date
+                Row(children: [
+                  Text(StringLibrary.getString('NEW_EVENT', 'DATE')),
+                  SizedBox(width: 5),
+                  ElevatedButton(
+                      onPressed: () => _selectDate(context),
+                      child: Text(DateFormat('MMM d, y').format(_selectedDate)),
+                      style: _getDateTimeButtonStyle())
+                ]),
+                SizedBox(width: 25),
+                // Event Time
+                Row(children: [
+                  Text(StringLibrary.getString('NEW_EVENT', 'TIME')),
+                  SizedBox(width: 5),
+                  ElevatedButton(
+                      onPressed: () => _selectTime(context),
+                      child: Text(DateFormat('hh:mm').format(_selectedDate)),
+                      style: _getDateTimeButtonStyle())
+                ])
+              ]),
+              if (_isFutureEvent()) paddingBetweenItems,
+              if (_isFutureEvent())
+                Row(children: [
+                  // TODO: Decide on final string for here
+                  const Text('Assignee'),
+                  ElevatedButton(
+                      onPressed: () => _selectAssignee(context),
+                      child: _selectedUser != null
+                          ? Text(_selectedUser as String)
+                          : Text(StringLibrary.getString(
+                              'NEW_EVENT', 'UNASSIGNED')))
+                ]),
+              paddingBetweenItems,
+              // Details list
+              Column(
+                  children: _details
+                      .map((detail) => _getDetailButton(detail))
+                      .toList()),
+              paddingBetweenItems,
+              SecondaryCustomButton(
+                  onPressed: _beginSelectingDetail,
+                  string: '+ ' +
+                      StringLibrary.getString('NEW_EVENT', 'ADD_DETAIL')),
+              Expanded(
+                  //This makes the Submit button stay at the bottom
+                  child: new Align(
+                      alignment: Alignment.bottomCenter,
+                      child: PrimaryCustomButton(
+                          onPressed: () => {
+                                _submitEvent(context),
+                                (_isFutureEvent())
+                                    ? widget.swapToEventListCallback()
+                                    : widget.swapToHistoryCallback()
+                              },
+                          string:
+                              StringLibrary.getString('NEW_EVENT', 'SUBMIT'))))
+            ])));
+  }
+
+  Widget _getDetailButton(Detail detail) {
+    return Padding(
+        padding: EdgeInsets.only(bottom: 10),
+        child: AddedDetailCustomButton(
+            string: detail.name,
+            colorId: DetailTypeAccessObject.getTypeColor(detail.typeId),
+            onPressed: () => {
+                  setState(() => {_details.remove(detail)})
+                }));
+  }
+
+  ButtonStyle _getDateTimeButtonStyle() {
+    return ElevatedButton.styleFrom(
+        primary: onPrimaryColorMaterial.shade100,
+        onPrimary: Colors.black,
+        elevation: 0);
   }
 
   _selectDetailCallback(String detailId) {
     setState(() {
-      _details.add(widget._detailAccessObject.getDetail(detailId));
+      if (!_details.contains(widget._detailAccessObject.getDetail(detailId))) {
+        _details.add(widget._detailAccessObject.getDetail(detailId));
+      }
       _selectingDetail = false;
     });
   }

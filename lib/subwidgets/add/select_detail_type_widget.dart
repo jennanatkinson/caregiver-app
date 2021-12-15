@@ -18,13 +18,13 @@ class _SelectDetailTypeWidgetState extends State<SelectDetailTypeWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: GridView.count(
-            crossAxisCount: 2,
-            children: DetailTypeAccessObject.getDetailTypes(widget.user)
-                .map((detailType) {
-              return Padding(
-                  padding: const EdgeInsets.all(50),
-                  child: SelectingDetailButton(
+        body: Padding(
+            padding: EdgeInsets.only(left: 20, right: 20, top: 50),
+            child: GridView.count(
+                crossAxisCount: 2,
+                children: DetailTypeAccessObject.getDetailTypes(widget.user)
+                    .map((detailType) {
+                  return SelectingDetailButton(
                       icon: IconData(detailType.iconId,
                           fontFamily: widget.fontFamily),
                       name: detailType.name,
@@ -32,7 +32,7 @@ class _SelectDetailTypeWidgetState extends State<SelectDetailTypeWidget> {
                       callback: () => {
                             widget.callback(detailType.id, detailType.color,
                                 detailType.iconId)
-                          }));
-            }).toList()));
+                          });
+                }).toList())));
   }
 }

@@ -2,18 +2,19 @@ import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MainAppBar(
+  String? firstTab = null;
+  String? secondTab = null;
+
+  MainAppBar(
       {Key? key,
       required this.carePlanName,
       required this.patientInitials,
-      required this.firstTab,
-      required this.secondTab})
+      this.firstTab,
+      this.secondTab})
       : super(key: key);
 
   final String carePlanName;
   final String patientInitials;
-  final String firstTab;
-  final String secondTab;
 
   @override
   final Size preferredSize = const Size.fromHeight(kToolbarHeight);
@@ -38,9 +39,9 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         // Title
         title: Text(carePlanName,
             style: const TextStyle(
-              fontSize: mediumLargeTextSize,
-              fontWeight: FontWeight.w300,
-            )),
+                fontSize: mediumLargeTextSize,
+                fontWeight: FontWeight.w300,
+                color: Colors.black)),
         centerTitle: true,
         collapsedHeight: 60.0, //this makes it so it doesn't collapse
 
@@ -56,11 +57,27 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         ],
 
         // Context Tabs
-        bottom: TabBar(
-            unselectedLabelColor: onPrimaryColorMaterial.shade400,
-            //TODO: Style the unselected tab's background
-            indicator: BoxDecoration(color: onPrimaryColorMaterial.shade400),
-            labelColor: Colors.white,
-            tabs: [Tab(text: firstTab), Tab(text: secondTab)]));
+        bottom: (firstTab != null)
+            ? TabBar(
+                labelStyle: TextStyle(
+                    fontSize: mediumTextSize, fontWeight: FontWeight.w500),
+                unselectedLabelColor: onPrimaryColorMaterial.shade400,
+                //TODO: Style the unselected tab's background
+                indicator:
+                    BoxDecoration(color: onPrimaryColorMaterial.shade400),
+                labelColor: Colors.white,
+                tabs: _getTabs())
+            : null);
+  }
+
+  List<Widget> _getTabs() {
+    List<Widget> tabs = [];
+    if (firstTab != null) {
+      tabs.add(Tab(text: firstTab));
+      if (secondTab != null) {
+        tabs.add(Tab(text: secondTab));
+      }
+    }
+    return tabs;
   }
 }

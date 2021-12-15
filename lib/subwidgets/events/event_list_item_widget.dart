@@ -52,8 +52,8 @@ class _EventListItemWidgetState extends State<EventListItemWidget> {
                           children: [
                             // Event Name
                             Text(widget.event.name,
-                                style:
-                                    const TextStyle(fontSize: mediumTextSize)),
+                                style: const TextStyle(
+                                    fontSize: mediumMidSmallTextSize)),
                             // Event Details
                             Row(
                                 children: widget.event.details
@@ -73,21 +73,19 @@ class _EventListItemWidgetState extends State<EventListItemWidget> {
 
   Color _getEventColor() {
     if (widget.event.details.isNotEmpty) {
-      return Color(int.parse(
-              DetailTypeAccessObject.getTypeColor(
-                  widget.event.details[0].typeId),
-              radix: 16) +
-          0xFF000000);
+      return getItemColor(
+          DetailTypeAccessObject.getTypeColor(widget.event.details[0].typeId));
     } else {
-      return onSecondaryColorMaterial.shade200;
+      return onSecondaryColorMaterial.shade300;
     }
   }
 
   Color _getEventBackgroundColor() {
     if (widget.event.details.isNotEmpty) {
-      return _getEventColor().withOpacity(.30);
+      return getItemOpacityColor(
+          DetailTypeAccessObject.getTypeColor(widget.event.details[0].typeId));
     } else {
-      return _getEventColor();
+      return onSecondaryColorMaterial.shade200;
     }
   }
 

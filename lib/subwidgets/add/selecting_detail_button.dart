@@ -1,3 +1,4 @@
+import 'package:caregiver_app/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,27 +15,27 @@ class SelectingDetailButton extends StatelessWidget {
   final String color;
   final VoidCallback callback;
 
-  static const double _iconSize = 100.0;
-  static const double _buttonSize = 150.0;
-  static const int _buttonColorBase = 16;
-  static const int _buttonColorAlpha = 0xFF000000;
-  static const double _paddingBetweenElements = 5.0;
+  static const double _iconSize = 40.0;
+  static const double _buttonSize = 100.0;
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       ElevatedButton(
-          child: Icon(icon, size: _iconSize),
-          style: ButtonStyle(
-              minimumSize: MaterialStateProperty.all(
-                  const Size(_buttonSize, _buttonSize)),
-              shape: MaterialStateProperty.all(const CircleBorder()),
-              backgroundColor: MaterialStateProperty.all(Color(
-                  int.parse(color, radix: _buttonColorBase) +
-                      _buttonColorAlpha))),
-          onPressed: callback),
-      const Padding(padding: EdgeInsets.all(_paddingBetweenElements)),
-      Text(name)
+          onPressed: callback,
+          child: Align(
+              alignment: Alignment.center,
+              child: Icon(icon, size: _iconSize, color: getItemColor(color))),
+          style: ElevatedButton.styleFrom(
+            elevation: 0,
+            shape: CircleBorder(),
+            padding: EdgeInsets.all(0),
+            primary: getItemOpacityColor(color),
+            fixedSize: Size(_buttonSize, _buttonSize), // <-- Button color
+            onPrimary: Colors.white, // <-- Splash color
+          )),
+      SizedBox(height: 10),
+      Text(name, style: TextStyle(fontWeight: FontWeight.w400))
     ], mainAxisAlignment: MainAxisAlignment.center);
   }
 }

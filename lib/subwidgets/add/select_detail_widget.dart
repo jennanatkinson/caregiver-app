@@ -26,18 +26,18 @@ class SelectDetailWidget extends StatefulWidget {
 class _SelectDetailWidgetState extends State<SelectDetailWidget> {
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-        crossAxisCount: 2,
-        children: widget._detailAccessObject
-            .getDetailsOfType(widget.typeId)
-            .map((detail) {
-          return Padding(
-              padding: const EdgeInsets.all(50),
-              child: SelectingDetailButton(
+    return Padding(
+        padding: EdgeInsets.only(left: 20, right: 20, top: 50),
+        child: GridView.count(
+            crossAxisCount: 2,
+            children: widget._detailAccessObject
+                .getDetailsOfType(widget.typeId)
+                .map((detail) {
+              return SelectingDetailButton(
                   icon: IconData(widget.iconId, fontFamily: widget.fontFamily),
                   name: detail.name,
                   color: widget.color,
-                  callback: () => {widget.selectCallback(detail.id)}));
-        }).toList());
+                  callback: () => {widget.selectCallback(detail.id)});
+            }).toList()));
   }
 }

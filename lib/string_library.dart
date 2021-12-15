@@ -18,10 +18,13 @@ class StringLibrary {
       'TASKS_BUTTON': 'Tasks'
     },
     'NEW_EVENT': {
+      'DATE': 'Date:',
+      'TIME': 'Time:',
       'ADD_DETAIL': 'Add Detail',
       'SELECT_DETAIL_TYPE': 'Select Detail Type',
       'EVENT_NAME': 'Event Name',
       'SUBMIT': 'Submit',
+      'ASSIGNED_PERSON': 'Assigned Person:',
       'UNASSIGNED': 'Unassigned'
     },
     'TASKS': {

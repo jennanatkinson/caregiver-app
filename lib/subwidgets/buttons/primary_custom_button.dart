@@ -13,17 +13,19 @@ class PrimaryCustomButton extends StatelessWidget {
     return ElevatedButton(
         child: Text(string),
         onPressed: onPressed,
-        style: ButtonStyle(
-            fixedSize: MaterialStateProperty.all<Size>(const Size(125, 40)),
-            textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(
+        style: ElevatedButton.styleFrom(
+            primary: onPrimaryColorMaterial.shade400,
+            onPrimary: Colors.white,
+            elevation: 0,
+            fixedSize: const Size(125, 40),
+            textStyle: const TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: mediumSmallTextSize,
-                color: Colors.white)), //TODO: This isn't working
+                color: Colors.white), //TODO: This isn't working
             /*padding: MaterialStateProperty.all<EdgeInsets>(
                 const EdgeInsets.all(15.0)),*/
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30.0),
-            ))));
+            )));
   }
 }

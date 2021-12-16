@@ -1,4 +1,6 @@
+import 'package:caregiver_app/dao/care_plan_access_object.dart';
 import 'package:caregiver_app/dao/user_access_object.dart';
+import 'package:caregiver_app/data_objects/care_plan.dart';
 import 'package:caregiver_app/data_objects/user.dart';
 import 'package:caregiver_app/string_library.dart';
 import 'package:caregiver_app/subwidgets/buttons/primary_custom_button.dart';
@@ -8,6 +10,7 @@ class LoginFormWidget extends StatefulWidget {
   LoginFormWidget({Key? key, required this.loginCallback}) : super(key: key);
   final Function loginCallback;
   final UserAccessObject _userAccessObject = UserAccessObject();
+  final CarePlanAccessObject _carePlanAccessObject = CarePlanAccessObject();
 
   @override
   State<LoginFormWidget> createState() => _LoginFormWidgetState();
@@ -67,7 +70,11 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                 User? user = widget._userAccessObject.verifyUser(
                     usernameController.text, passwordController.text);
                 if (user != null) {
-                  widget.loginCallback(user);
+                  CarePlan? carePlan = (user.defaultCarePlanId != null)
+                      ? widget._carePlanAccessObject
+                          .getCarePlan(user.defaultCarePlanId as String)
+                      : null;
+                  widget.loginCallback(user, carePlan);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(

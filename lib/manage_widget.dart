@@ -1,3 +1,4 @@
+import 'package:caregiver_app/data_objects/care_plan.dart';
 import 'package:caregiver_app/subwidgets/manage/care_profile_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -6,11 +7,11 @@ import 'main_app_bar.dart';
 class ManageWidget extends StatefulWidget {
   const ManageWidget(
       {Key? key,
-      required this.carePlanName,
+      required this.carePlan,
       required this.userId,
       required this.patientInitials})
       : super(key: key);
-  final String carePlanName;
+  final CarePlan carePlan;
   final String userId;
   final String patientInitials;
 
@@ -32,7 +33,7 @@ class _ManageWidgetState extends State<ManageWidget> {
                     headerSliverBuilder: (context, value) {
                       return <Widget>[
                         MainAppBar(
-                            carePlanName: widget.carePlanName,
+                            carePlanName: widget.carePlan.name,
                             patientInitials: widget.patientInitials,
                             firstTab: 'Manage Care')
                       ];
@@ -40,6 +41,7 @@ class _ManageWidgetState extends State<ManageWidget> {
                     // Lists dependent on which tab is selected
                     body: SingleChildScrollView(
                         child: CareProfileWidget(
-                            patientInitials: widget.patientInitials))))));
+                            patientInitials: widget.patientInitials,
+                            carePlan: widget.carePlan))))));
   }
 }

@@ -10,8 +10,10 @@ class UserAccessObject {
   UserAccessObject._internal();
 
   final List<_UserInfo> _users = [
-    _UserInfo(User('Username', 'Avery', 'U_000000000000'), 'Password'),
-    _UserInfo(User('jeanb', 'Jean', 'U_000000000001'), 'jb12345')
+    _UserInfo(User('Username', 'Avery', 'U_000000000000', 'C_000000000000'),
+        'Password'),
+    _UserInfo(
+        User('jeanb', 'Jean', 'U_000000000001', 'C_000000000000'), 'jb12345')
   ];
 
   // Returns 'null' if the username/password combo isn't valid

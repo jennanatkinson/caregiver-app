@@ -14,7 +14,9 @@ class HistoryWidget extends StatefulWidget {
   final String userId;
   final CarePlan carePlan;
   final String patientInitials;
-  final String _firstTab = StringLibrary.getString('HISTORY', 'TIMELINE_TAB');
+  final List<String> _tabStrings = [
+    StringLibrary.getString('HISTORY', 'TIMELINE_TAB')
+  ];
 
   @override
   State<HistoryWidget> createState() => _HistoryWidgetState();
@@ -36,7 +38,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
               MainAppBar(
                   carePlanName: widget.carePlan.name,
                   patientInitials: widget.patientInitials,
-                  firstTab: widget._firstTab)
+                  tabStrings: widget._tabStrings)
             ];
           },
           // Lists dependent on which tab is selected

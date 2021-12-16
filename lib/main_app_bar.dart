@@ -2,23 +2,21 @@ import 'package:caregiver_app/theme.dart';
 import 'package:flutter/material.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
-  String? firstTab = null;
-  String? secondTab = null;
-
   MainAppBar(
       {Key? key,
       required this.carePlanName,
       required this.patientInitials,
-      this.firstTab,
-      this.secondTab})
+      required this.tabStrings})
       : super(key: key);
 
   final String carePlanName;
+  final List<String> tabStrings;
   final String patientInitials;
 
   @override
   final Size preferredSize = const Size.fromHeight(kToolbarHeight);
-  final double _expandedHeight = 90;
+  final double _expandedHeight = 90.0;
+  final double _collapsedHeight = 60.0;
   final bool _floating = true;
   final bool _pinned = true;
   final bool _snap = true;
@@ -26,7 +24,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-        //TODO: Figure out how to add margin or padding to this
+        // TODO: Figure out how to add margin or padding to this
         // Scaffold(
         //appBar: AppBar(
         // Scrolling Behavior
@@ -43,7 +41,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                 fontWeight: FontWeight.w300,
                 color: Colors.black)),
         centerTitle: true,
-        collapsedHeight: 60.0, //this makes it so it doesn't collapse
+        collapsedHeight: _collapsedHeight,
 
         // Patient Icon
         actions: <Widget>[
@@ -57,12 +55,12 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         ],
 
         // Context Tabs
-        bottom: (firstTab != null)
+        bottom: (tabStrings.length > 0)
             ? TabBar(
                 labelStyle: TextStyle(
                     fontSize: mediumTextSize, fontWeight: FontWeight.w500),
                 unselectedLabelColor: onPrimaryColorMaterial.shade400,
-                //TODO: Style the unselected tab's background
+                // TODO: Style the unselected tab's background
                 indicator:
                     BoxDecoration(color: onPrimaryColorMaterial.shade400),
                 labelColor: Colors.white,
@@ -72,10 +70,10 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   List<Widget> _getTabs() {
     List<Widget> tabs = [];
-    if (firstTab != null) {
-      tabs.add(Tab(text: firstTab));
-      if (secondTab != null) {
-        tabs.add(Tab(text: secondTab));
+    if (tabStrings.length > 0) {
+      tabs.add(Tab(text: tabStrings[0]));
+      if (tabStrings.length > 1) {
+        tabs.add(Tab(text: tabStrings[1]));
       }
     }
     return tabs;

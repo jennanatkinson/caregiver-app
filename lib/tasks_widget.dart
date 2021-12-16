@@ -15,8 +15,10 @@ class TasksWidget extends StatefulWidget {
   final String userId;
   final CarePlan carePlan;
   final String patientInitials;
-  final String _firstTab = StringLibrary.getString('TASKS', 'MY_TASKS_TAB');
-  final String _secondTab = StringLibrary.getString('TASKS', 'ALL_TASKS_TAB');
+  final List<String> _tabStrings = [
+    StringLibrary.getString('TASKS', 'MY_TASKS_TAB'),
+    StringLibrary.getString('TASKS', 'ALL_TASKS_TAB')
+  ];
 
   @override
   State<TasksWidget> createState() => _TasksWidgetState();
@@ -38,8 +40,7 @@ class _TasksWidgetState extends State<TasksWidget> {
               MainAppBar(
                   carePlanName: widget.carePlan.name,
                   patientInitials: widget.patientInitials,
-                  firstTab: widget._firstTab,
-                  secondTab: widget._secondTab)
+                  tabStrings: widget._tabStrings)
             ];
           },
           // Lists dependent on which tab is selected

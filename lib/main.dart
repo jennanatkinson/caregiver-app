@@ -1,4 +1,5 @@
 import 'package:caregiver_app/add_widget.dart';
+import 'package:caregiver_app/data_objects/care_plan.dart';
 import 'package:caregiver_app/manage_widget.dart';
 import 'package:caregiver_app/settings_widget.dart';
 import 'package:caregiver_app/string_library.dart';
@@ -26,7 +27,7 @@ class _CaregiverAppState extends State<CaregiverApp> {
   int _activeView = 0;
   // The user currently logged in. Null if a user isn't logged in.
   User? _user;
-  String _carePlanId = 'C_000000000000';
+  CarePlan? _carePlan;
   String _carePlanName = StringLibrary.getString('MAIN', 'CARE_PLAN_NAME');
   String _patientInitials = 'E';
 
@@ -53,17 +54,17 @@ class _CaregiverAppState extends State<CaregiverApp> {
               patientInitials: _patientInitials,
             ),
             AddWidget(
-                carePlanId: _carePlanId,
+                carePlan: _carePlan as CarePlan,
                 user: (_user as User),
                 swapToEventListCallback: _swapToEventListCallback,
                 swapToHistoryCallback: _swapToHistoryCallback),
             // Change to "Manage Care" widget
             ManageWidget(
-                carePlanName: _carePlanName,
+                carePlan: _carePlan as CarePlan,
                 userId: (_user as User).userId,
                 patientInitials: _patientInitials),
             SettingsWidget(
-                carePlanId: _carePlanId,
+                carePlan: _carePlan as CarePlan,
                 user: (_user as User),
                 logoutCallback: _logoutCallback),
           ].elementAt(_activeView),
@@ -95,18 +96,18 @@ class _CaregiverAppState extends State<CaregiverApp> {
     });
   }
 
-  void _loginCallback(User user) {
+  void _loginCallback(User user, CarePlan? carePlan) {
     setState(() {
       _activeView = 0;
       _user = user;
-      _carePlanId = 'C_000000000000';
+      _carePlan = carePlan;
     });
   }
 
   void _logoutCallback() {
     setState(() {
       _user = null;
-      _carePlanId = '';
+      _carePlan = null;
     });
   }
 }

@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 
 class EventListItemWidget extends StatefulWidget {
   EventListItemWidget(
-      {Key? key, required this.event, required this.removeItemCallback})
+      {Key? key, required this.event, required this.removeEventCallback})
       : super(key: key);
   final Event event;
-  final VoidCallback removeItemCallback;
+  final VoidCallback removeEventCallback;
   final EventAccessObject _eventAccessObject = EventAccessObject();
 
   @override
@@ -41,7 +41,7 @@ class _EventListItemWidgetState extends State<EventListItemWidget> {
                       _leadingIconSize + _taskBoxPadding + taskListPaddingLeft,
                   padding:
                       const EdgeInsets.only(right: _taskBoxPadding, top: 7),
-                  child: _getEventLeadingIcon()),
+                  child: _createEventLeadingIcon()),
               // Event Info
               Expanded(
                   child: SizedBox(
@@ -89,7 +89,7 @@ class _EventListItemWidgetState extends State<EventListItemWidget> {
     }
   }
 
-  Widget _getEventLeadingIcon() {
+  Widget _createEventLeadingIcon() {
     if (widget.event.isComplete()) {
       return Container(
         decoration:
@@ -107,7 +107,7 @@ class _EventListItemWidgetState extends State<EventListItemWidget> {
                 setState(() {
                   widget.event.toggleComplete();
                   widget._eventAccessObject.save(widget.event);
-                  widget.removeItemCallback();
+                  widget.removeEventCallback();
                 });
               }));
     }

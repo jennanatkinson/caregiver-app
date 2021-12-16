@@ -28,7 +28,6 @@ class _CaregiverAppState extends State<CaregiverApp> {
   // The user currently logged in. Null if a user isn't logged in.
   User? _user;
   CarePlan? _carePlan;
-  String _carePlanName = StringLibrary.getString('MAIN', 'CARE_PLAN_NAME');
   String _patientInitials = 'E';
 
   @override
@@ -44,13 +43,13 @@ class _CaregiverAppState extends State<CaregiverApp> {
           // Currently active view
           body: [
             TasksWidget(
-              carePlanName: _carePlanName,
+              carePlan: _carePlan as CarePlan,
               userId: (_user as User).userId,
               patientInitials: _patientInitials,
             ),
             HistoryWidget(
-              carePlanName: StringLibrary.getString('MAIN', 'CARE_PLAN_NAME'),
               userId: (_user as User).userId,
+              carePlan: _carePlan as CarePlan,
               patientInitials: _patientInitials,
             ),
             AddWidget(

@@ -1,3 +1,4 @@
+import 'package:caregiver_app/data_objects/care_plan.dart';
 import 'package:caregiver_app/main_app_bar.dart';
 import 'package:caregiver_app/string_library.dart';
 import 'package:caregiver_app/subwidgets/events/event_list_widget.dart';
@@ -6,14 +7,16 @@ import 'package:flutter/material.dart';
 class HistoryWidget extends StatefulWidget {
   HistoryWidget(
       {Key? key,
-      required this.carePlanName,
       required this.userId,
+      required this.carePlan,
       required this.patientInitials})
       : super(key: key);
-  final String carePlanName;
   final String userId;
+  final CarePlan carePlan;
   final String patientInitials;
-  final String _firstTab = StringLibrary.getString('HISTORY', 'TIMELINE_TAB');
+  final List<String> _tabStrings = [
+    StringLibrary.getString('HISTORY', 'TIMELINE_TAB')
+  ];
 
   @override
   State<HistoryWidget> createState() => _HistoryWidgetState();
@@ -33,16 +36,19 @@ class _HistoryWidgetState extends State<HistoryWidget> {
           headerSliverBuilder: (context, value) {
             return <Widget>[
               MainAppBar(
-                  carePlanName: widget.carePlanName,
+                  carePlanName: widget.carePlan.name,
                   patientInitials: widget.patientInitials,
-                  firstTab: widget._firstTab)
+                  tabStrings: widget._tabStrings)
             ];
           },
           // Lists dependent on which tab is selected
           body: TabBarView(children: [
             // First tab (History)
             EventListWidget(
-                userId: widget.userId, allTasks: true, showHistory: true),
+                userId: widget.userId,
+                carePlanId: widget.carePlan.id,
+                allTasks: true,
+                showHistory: true),
           ])),
     ));
   }

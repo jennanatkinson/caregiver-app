@@ -92,7 +92,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                   ElevatedButton(
                       onPressed: () => _selectDate(context),
                       child: Text(DateFormat('MMM d, y').format(_selectedDate)),
-                      style: _getDateTimeAssignButtonStyle())
+                      style: _createDateTimeAssignButtonStyle())
                 ]),
                 SizedBox(width: 25),
                 // Event Time
@@ -102,7 +102,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                   ElevatedButton(
                       onPressed: () => _selectTime(context),
                       child: Text(DateFormat('hh:mm').format(_selectedDate)),
-                      style: _getDateTimeAssignButtonStyle())
+                      style: _createDateTimeAssignButtonStyle())
                 ])
               ]),
               if (_isFutureEvent()) paddingBetweenItems,
@@ -112,7 +112,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                   SizedBox(width: _itemSpacing),
                   ElevatedButton(
                       onPressed: () => _selectAssignee(context),
-                      style: _getDateTimeAssignButtonStyle(),
+                      style: _createDateTimeAssignButtonStyle(),
                       child: _assignedUser != null
                           ? Text((_assignedUser as User).username)
                           : Text(StringLibrary.getString(
@@ -122,7 +122,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
               // Details list
               Column(
                   children: _details
-                      .map((detail) => _getDetailButton(detail))
+                      .map((detail) => _createDetailButton(detail))
                       .toList()),
               paddingBetweenItems,
               SecondaryCustomButton(
@@ -148,7 +148,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
             ])));
   }
 
-  Widget _getDetailButton(Detail detail) {
+  Widget _createDetailButton(Detail detail) {
     return Padding(
         padding: EdgeInsets.only(bottom: 10),
         child: AddedDetailCustomButton(
@@ -159,7 +159,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                 }));
   }
 
-  ButtonStyle _getDateTimeAssignButtonStyle() {
+  ButtonStyle _createDateTimeAssignButtonStyle() {
     return ElevatedButton.styleFrom(
         primary: onPrimaryColorMaterial.shade100,
         onPrimary: Colors.black,

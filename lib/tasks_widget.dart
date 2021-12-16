@@ -1,3 +1,4 @@
+import 'package:caregiver_app/data_objects/care_plan.dart';
 import 'package:caregiver_app/main_app_bar.dart';
 import 'package:caregiver_app/string_library.dart';
 import 'package:caregiver_app/subwidgets/events/event_list_widget.dart';
@@ -7,12 +8,12 @@ import 'package:flutter/material.dart';
 class TasksWidget extends StatefulWidget {
   TasksWidget(
       {Key? key,
-      required this.carePlanName,
+      required this.carePlan,
       required this.userId,
       required this.patientInitials})
       : super(key: key);
-  final String carePlanName;
   final String userId;
+  final CarePlan carePlan;
   final String patientInitials;
   final String _firstTab = StringLibrary.getString('TASKS', 'MY_TASKS_TAB');
   final String _secondTab = StringLibrary.getString('TASKS', 'ALL_TASKS_TAB');
@@ -35,7 +36,7 @@ class _TasksWidgetState extends State<TasksWidget> {
           headerSliverBuilder: (context, value) {
             return <Widget>[
               MainAppBar(
-                  carePlanName: widget.carePlanName,
+                  carePlanName: widget.carePlan.name,
                   patientInitials: widget.patientInitials,
                   firstTab: widget._firstTab,
                   secondTab: widget._secondTab)
@@ -48,12 +49,16 @@ class _TasksWidgetState extends State<TasksWidget> {
                 // First tab (My Tasks)
                 EventListWidget(
                   userId: widget.userId,
+                  carePlanId: widget.carePlan.id,
                   allTasks: false,
                   showHistory: false,
                 ),
                 // Second tab (All Tasks)
                 EventListWidget(
-                    userId: widget.userId, allTasks: true, showHistory: false)
+                    userId: widget.userId,
+                    carePlanId: widget.carePlan.id,
+                    allTasks: true,
+                    showHistory: false)
               ]))),
     ));
   }

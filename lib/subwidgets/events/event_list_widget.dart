@@ -9,10 +9,12 @@ class EventListWidget extends StatefulWidget {
   EventListWidget(
       {Key? key,
       required this.userId,
+      required this.carePlanId,
       required this.allTasks,
       required this.showHistory})
       : super(key: key);
   final String userId;
+  final String carePlanId;
   final bool allTasks;
   final bool showHistory;
 
@@ -26,58 +28,74 @@ const double taskListPaddingLeft = 20;
 const double taskListPaddingTop = 20;
 
 class _EventListWidgetState extends State<EventListWidget> {
-  var _listItems = <Widget>[];
-
   @override
   Widget build(BuildContext context) {
-    _generateListItems();
-    return ListView(children: _listItems);
+    return ListView(children: _createEventList());
   }
 
-  //TODO: figure out how to make this update
-  void _generateListItems() {
-    _listItems = <Widget>[];
-    List<Event> incompleteEvents = widget._eventAccessObject.getEvents(null,
-        null, null, null, false, null, widget.allTasks ? null : widget.userId);
-    List<Event> completeEvents = widget._eventAccessObject.getEvents(null, null,
-        null, null, true, null, widget.allTasks ? null : widget.userId);
-
+  List<Widget> _createEventList() {
     if (!widget.showHistory) {
-      for (int i = 0; i < incompleteEvents.length; i++) {
-        _listItems.add(EventListItemWidget(
-          event: incompleteEvents[i],
-          removeItemCallback: _generateListItems,
-        ));
-      }
+      return _createIncompleteEventList();
     } else {
-      DateTime currentDate = DateTime.now();
-      completeEvents.sort(_compareCompletedEvents);
-      for (int i = 0; i < completeEvents.length; i++) {
-        var event = completeEvents[i];
-        var eventDate =
-            DateTime.fromMillisecondsSinceEpoch(event.completedAt as int);
-        if (i == 0 ||
-            eventDate.month != currentDate.month ||
-            eventDate.day != currentDate.day) {
-          currentDate = DateTime(
-              currentDate.year,
-              eventDate.month,
-              eventDate.day,
-              currentDate.hour,
-              currentDate.minute,
-              currentDate.second,
-              currentDate.millisecond,
-              currentDate.microsecond);
-          _listItems
-              .add(_getEventTitle(DateFormat("MMMMd").format(currentDate)));
-        }
-
-        _listItems.add(EventListItemWidget(
-          event: event,
-          removeItemCallback: _generateListItems,
-        ));
-      }
+      return _createCompleteEventList();
     }
+  }
+
+  List<Widget> _createIncompleteEventList() {
+    List<Widget> eventList = <Widget>[];
+    List<Event> events = widget._eventAccessObject.getEvents(
+        null,
+        null,
+        widget.carePlanId,
+        null,
+        false,
+        null,
+        widget.allTasks ? null : widget.userId);
+
+    for (int i = 0; i < events.length; i++) {
+      eventList.add(EventListItemWidget(
+          event: events[i], removeEventCallback: _removeEventCallback));
+    }
+
+    return eventList;
+  }
+
+  List<Widget> _createCompleteEventList() {
+    List<Widget> eventList = <Widget>[];
+    List<Event> events = widget._eventAccessObject.getEvents(
+        null,
+        null,
+        widget.carePlanId,
+        null,
+        true,
+        null,
+        widget.allTasks ? null : widget.userId);
+    events.sort(_compareCompletedEvents);
+
+    DateTime currentDate = DateTime.now();
+    int dateHeaderDay = currentDate.day;
+    int dateHeaderMonth = currentDate.month;
+    int dateHeaderYear = currentDate.year;
+
+    for (int i = 0; i < events.length; i++) {
+      var event = events[i];
+      var eventDate =
+          DateTime.fromMillisecondsSinceEpoch(event.completedAt as int);
+      if (i == 0 ||
+          eventDate.day != dateHeaderDay ||
+          eventDate.month != dateHeaderMonth ||
+          eventDate.year != dateHeaderYear) {
+        dateHeaderDay = eventDate.day;
+        dateHeaderMonth = eventDate.month;
+        dateHeaderYear = eventDate.year;
+        eventList.add(_createDateHeader(DateFormat("MMMMd").format(eventDate)));
+      }
+
+      eventList.add(EventListItemWidget(
+          event: event, removeEventCallback: _removeEventCallback));
+    }
+
+    return eventList;
   }
 
   int _compareCompletedEvents(Event b, Event a) {
@@ -92,11 +110,15 @@ class _EventListWidgetState extends State<EventListWidget> {
     }
   }
 
-  Widget _getEventTitle(String string) {
+  Widget _createDateHeader(String string) {
     return Container(
         padding: const EdgeInsets.only(
             left: taskListPaddingLeft, top: taskListPaddingTop),
         child: Text(string,
             style: const TextStyle(fontSize: mediumLargeTextSize)));
+  }
+
+  void _removeEventCallback() {
+    setState(() {});
   }
 }

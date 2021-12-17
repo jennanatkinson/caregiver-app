@@ -83,6 +83,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                       hintText:
                           StringLibrary.getString('NEW_EVENT', 'EVENT_NAME'))),
               paddingBetweenItems,
+              // Event Date and Time
               Row(children: [
                 SizedBox(width: 10),
                 // Event Date
@@ -106,6 +107,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                 ])
               ]),
               if (_isFutureEvent()) paddingBetweenItems,
+              // Assigned User
               if (_isFutureEvent())
                 Row(children: [
                   Text(StringLibrary.getString('NEW_EVENT', 'ASSIGNED_PERSON')),
@@ -132,6 +134,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                   string: '+ ' +
                       StringLibrary.getString('NEW_EVENT', 'ADD_DETAIL')),
               paddingBetweenItems,
+              // Submit
               Expanded(
                   //This makes the Submit button stay at the bottom
                   child: new Align(
@@ -233,7 +236,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
           _isFutureEvent() ? _selectedDate.millisecondsSinceEpoch : null,
           _isFutureEvent() ? null : _selectedDate.millisecondsSinceEpoch,
           null,
-          (_assignedUser as User).userId));
+          (_assignedUser != null) ? (_assignedUser as User).userId : null));
       (_isFutureEvent())
           ? widget.swapToEventListCallback()
           : widget.swapToHistoryCallback();
